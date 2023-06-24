@@ -2,8 +2,8 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import "./node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./node_modules/@openzeppelin/contracts/utils/Counters.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
 contract EducationSystem is ERC721 {
    using Counters for Counters.Counter;
