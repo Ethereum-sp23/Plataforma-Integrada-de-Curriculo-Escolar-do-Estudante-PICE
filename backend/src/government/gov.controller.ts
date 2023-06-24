@@ -5,7 +5,7 @@ import { GovernmentService } from './gov.service';
 export class GovernmentController {
   constructor(private readonly GovernmentService: GovernmentService) {}
 
-  @Get()
+  @Get("getNameByAddress")
   getHello(): string {
     return this.GovernmentService.getHello();
   }

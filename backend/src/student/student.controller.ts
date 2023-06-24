@@ -6,7 +6,7 @@ export class StudentController {
   constructor(private readonly StudentService: StudentService) {}
 
   @Get()
-  getHello(): string {
+  getHello(): Promise<object> {
     return this.StudentService.getHello();
   }
 }
