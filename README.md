@@ -80,3 +80,9 @@
     3. Abre portas para a implementação de elementos de gamificação na educação, engajando o aluno de forma lúdica, o que pode estimular o aprendizado e a participação ativa e
 
     4. Ao visualizar seu próprio desempenho de forma clara e transparente na plataforma curricular, o aluno pode entender e apreciar o impacto direto de seu esforço e dedicação na escola. Isso promove uma maior motivação e autoconhecimento, incentivando-os a se empenharem ainda mais em seu desenvolvimento acadêmico.
+
+## A solução e a ODS
+
+    A ODS 4 da ONU diz: "**Assegurar a educação inclusiva e equitativa e de qualidade, e promover oportunidades de aprendizagem ao longo da vida para todas e todos**"
+
+    Ao alinhar os benefícios do sistema de currículos unificado citados acima, com os objetivos da ODS 4, podemos observar que essa abordagem contribui para uma educação de qualidade ao promover a documentação e o reconhecimento das conquistas dos estudantes, garantir a transparência e a verificabilidade das informações, oferecer oportunidades iguais de admissão e seleção, além de facilitar a comunicação e networking entre os participantes do processo educacional. Dessa forma, a utilização da tecnologia blockchain no registro curricular dos estudantes pode impulsionar a busca pela educação de qualidade e a promoção da equidade no acesso ao conhecimento.
