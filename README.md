@@ -84,3 +84,43 @@ Pedro é um estudante do ensino médio que está se preparando para ingressar em
 ![1687649869660](image/README/1687649869660.png)
 
 Ana Silva é administradora em uma escola de médio porte que busca constantemente promover uma educação de qualidade para seus alunos. A escola valoriza o desenvolvimento acadêmico e extracurricular dos estudantes, como Pedro, e está empenhada em fornecer um ambiente de aprendizado inclusivo e equitativo. Com a implementação de um sistema de currículos unificado baseado em blockchain, Ana vê uma oportunidade de melhorar a transparência e a verificabilidade das informações acadêmicas dos alunos. A instituição acredita que isso contribuirá para uma avaliação mais justa e precisa do desempenho dos estudantes, além de facilitar a comunicação com outras instituições acadêmicas nos processos de transferência e matrícula de alunos. Ana vê a solução como uma forma de fortalecer sua reputação e demonstrar seu compromisso com uma educação de qualidade, fornecendo um ambiente seguro e confiável para armazenar e compartilhar os registros educacionais dos alunos.
+
+## Regras de negócio Smart Contract
+
+As regras de negócio do contrato "EducationSystem" são as seguintes:
+
+1. Criação de Escola:
+
+   - Apenas o governo pode criar uma escola.
+   - A função `createSchool` permite que o governo crie uma escola ao fornecer o endereço da escola como parâmetro.
+2. Criação de Estudante:
+
+   - Apenas o governo pode criar um estudante.
+   - A função `createStudent` permite que o governo crie um estudante ao fornecer o endereço do estudante como parâmetro.
+   - O estudante criado é associado à escola do remetente da transação.
+3. Consulta de Estudante:
+
+   - A função `getStudent` permite que qualquer pessoa consulte as escolas permitidas e os NFTs (tokens não fungíveis) de propriedade de um determinado estudante, fornecendo o endereço do estudante como parâmetro.
+4. Exclusão de Estudante:
+
+   - Apenas escolas ou o governo podem excluir um estudante.
+   - A função `deleteStudent` permite que escolas ou o governo excluam um estudante ao fornecer o endereço do estudante como parâmetro.
+5. Emissão de NFT (Token Não Fungível):
+
+   - Apenas escolas ou o governo podem emitir um NFT.
+   - A função `issueNFT` permite que escolas ou o governo emitam um NFT para um determinado estudante, fornecendo o endereço do estudante como parâmetro.
+   - Cada NFT emitido é associado à escola emissora, ao estudante e à data de emissão.
+6. Destruição de NFT:
+
+   - Apenas escolas podem destruir um NFT emitido por elas.
+   - A função `destroyNFT` permite que escolas destruam um NFT emitido por elas ao fornecer o ID do NFT como parâmetro.
+   - A destruição só é permitida durante o período de validade do NFT (definido como 30 dias a partir da data de emissão).
+7. Consulta de NFTs da Escola:
+
+   - A função `getSchoolNFTs` permite que qualquer pessoa consulte as informações de um NFT emitido pela escola, fornecendo o ID do NFT como parâmetro.
+8. Consulta de NFTs de Propriedade do Estudante:
+
+   - A função `seeOwnedNFTs` permite que qualquer pessoa consulte os IDs dos NFTs de propriedade de um determinado estudante, fornecendo o endereço do estudante como parâmetro.
+9. Consulta da Origem de um NFT:
+
+   - A função `seeNFTOrigin` permite que qualquer pessoa consulte o endereço da escola emissora de um determinado NFT, fornecendo o ID do NFT como parâmetro.
