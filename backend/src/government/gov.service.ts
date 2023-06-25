@@ -134,6 +134,25 @@ export class GovernmentService {
     };
   }
 
+  async getSchools(): Promise<Response> {
+    const { data, error } = await supabase
+      .from('gov_schools')
+      .select('id, name, address, email');
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    if (!data.length) {
+      return { message: 'No data found!', data: null };
+    }
+
+    return {
+      message: 'Everyone in your hands...',
+      data,
+    };
+  }
+
   // async deleteSchool(email: string): Promise<string> {
   //   const { data, error: selectError } = await supabase
   //     .from('gov_schools')
