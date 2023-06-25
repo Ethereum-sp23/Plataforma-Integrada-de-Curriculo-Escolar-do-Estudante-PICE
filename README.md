@@ -1,6 +1,9 @@
 # Plataforma Integrada de Currículo Escolar do Estudante (PICE)
 
-![1687646925848](image/README/1687646925848.png)
+<div align="center">
+   <img src="image/README/1687646925848.png" alt="Minha Figura">
+</div>
+<br>
 
 A PICE é uma plataforma de registro acadêmico baseada em blockchain que empodera os estudantes, permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para uma educação de qualidade e, assim, atingir a ODS 4 da ONU - Educação de Qualidade.
 
