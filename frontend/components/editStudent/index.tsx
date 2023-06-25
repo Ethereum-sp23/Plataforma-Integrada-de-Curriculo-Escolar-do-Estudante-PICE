@@ -12,7 +12,6 @@ import { axios } from "@/config/axios";
 
 interface EditStudentProps {
     params: { id: string };
-    params: { id: string };
 }
 
 const schema = yup.object({

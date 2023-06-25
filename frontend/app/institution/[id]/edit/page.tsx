@@ -4,7 +4,6 @@ import Image, { StaticImageData } from "next/image";
 import StudentHeader from "@/components/studentHeader";
 import Card from "@/components/card";
 import CurriculumItem from "@/components/curriculumItem";
-import { curriculumItems, studentInfoItems } from "./data";
 import { LoadingState } from "@taikai/rocket-kit";
 import EditStudent from "@/components/editStudent";
 import { axios } from "@/config/axios";

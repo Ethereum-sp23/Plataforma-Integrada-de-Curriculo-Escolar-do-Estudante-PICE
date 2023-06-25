@@ -22,7 +22,6 @@
     "electron": "^25.2.0",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
-    "ethers": "^6.6.1",
     "framer-motion": "^10.12.17",
     "lucide-react": "^0.252.0",
     "material-react-table": "^1.14.0",
