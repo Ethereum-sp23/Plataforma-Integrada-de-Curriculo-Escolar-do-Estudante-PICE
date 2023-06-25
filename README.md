@@ -202,3 +202,50 @@ Para instalar o projeto, siga os seguintes passos:
 7. Execute `pnpm start` para executar o módulo de backend
 
 ## Como usar o projeto?
+
+## Nosso time
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.linkedin.com/in/henriquelfmatias/">
+        <img src="https://github.com/Lemos1347.png" width="100px;" alt="profile image"/><br>
+        <sub>
+          <b>Henrique Matias</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.linkedin.com/in/lyorreisquintao/">
+        <img src="https://github.com/lyorrei-inteli.png" width="100px;" alt="profile image"/><br>
+        <sub>
+          <b>Lyorrei Quintão</b>
+        </sub>
+      </a>
+    </td>
+  <td align="center"> 
+      <a href="https://www.linkedin.com/in/paulo-evangelista/">
+        <img src="https://github.com/paulo-evangelista.png" width="100px;" alt="profile image"/><br>
+        <sub>
+          <b>Paulo Presa</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.linkedin.com/in/sophia-dias/">
+        <img src="https://github.com/sophiadias1.png" width="100px;" alt="profile image"/><br>
+        <sub>
+          <b>Sofia Dias</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.linkedin.com/in/victor-severiano-de-carvalho-b57a05237">
+        <img src="https://github.com/vict0rcarvalh0.png" width="100px;" alt="Victor Carvalho profile image"/><br>
+        <sub>
+          <b>Victor Severiano de Carvalho</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
