@@ -24,7 +24,7 @@ export class GovernmentService {
 
     const contract = new DappKitFunctions();
 
-    await contract.adminSendTransaction('createSchool', [account.address]);
+    await contract.adminSendTransaction('createStudent', [account.address, '']);
 
     const { error } = await supabase.from('gov_people').insert([
       {
