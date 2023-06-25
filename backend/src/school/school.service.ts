@@ -12,80 +12,62 @@ export class SchoolService {
   private pinata: PinataClient;
 
   constructor() {
-    // this.pinata = new PinataClient('<seu_pinata_api_key>', '<seu_pinata_api_secret>');
+    this.pinata = new PinataClient(
+      process.env.PINATA_API_KEY,
+      process.env.PINATA_SECRET_KEY,
+    );
   }
 
-  async mintNFT({
-    image,
-    metadata,
-    studentAddress,
-    schoolEmail,
-  }): Promise<string> {
+  async mintNFT(
+    { metadata, studentAddress, schoolEmail },
+    file,
+  ): Promise<string> {
     const { data, error } = await supabase
       .from('gov_schools')
       .select('*')
       .eq('email', schoolEmail);
 
+      console.log(schoolEmail)
     if (error) {
       throw new Error(error.message);
     }
     //--------------------------------------------------------------------------------------
-    if (!image) throw new Error('Please select an image to upload');
+    if (!file) throw new Error('Please select an image to upload');
 
     const imageFormData = new FormData();
-    imageFormData.append('file', image);
+    imageFormData.append('file', file);
 
-    const imageUploadingResponse = await axios({
-      method: 'post',
-      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
-      data: imageFormData,
-      headers: {
-        pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-        pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-        'Content-Type': 'multipart/form-data',
+    const imageUploadingResponse = await this.pinata.pinFileToIPFS(file, {
+      pinataMetadata: {
+        name: 'CIDE record',
+      },
+      pinataOptions: {
+        cidVersion: 0,
       },
     });
 
-    const uploadedImageLink = `https://ipfs.io/ipfs/${imageUploadingResponse.data.IpfsHash}`;
+    const uploadedImageLink = `https://ipfs.io/ipfs/${imageUploadingResponse.IpfsHash}`;
 
     //--------------------------------------------------------------------------------------
 
-    const NFTFormData = new FormData();
-    NFTFormData.append('image', uploadedImageLink);
-    NFTFormData.append('metadata', metadata);
+    const IPFSJson = {
+      image: uploadedImageLink,
+      metadata: metadata,
+    };
 
-    const NFTUploadingResponse = await axios({
-      method: 'post',
-      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
-      data: NFTFormData,
-      headers: {
-        pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-        pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const NFTuploadingResponse = await this.pinata.pinJSONToIPFS(IPFSJson);
 
-    const finalIPFSLink = `https://ipfs.io/ipfs/${NFTUploadingResponse.data.IpfsHash}`;
+    const finalIPFSLink = `https://ipfs.io/ipfs/${NFTuploadingResponse.IpfsHash}`;
 
     const contract = new DappKitFunctions();
 
+    console.log(data[0].private_key)
     await contract.userSendTransaction(data[0].private_key, 'issueNFT', [
       studentAddress,
       finalIPFSLink,
     ]);
 
     return 'NFT created successfully!';
-  }
-
-  async sendFileToIpfs(filename, title) {
-    const { IpfsHash } = await this.pinata.pinFileToIPFS(ReadableStream, {
-      pinataMetadata: {
-        image: filename,
-        name: title,
-      },
-    });
-
-    return IpfsHash;
   }
 
   async getSchoolNFTs(address: string): Promise<string> {
