@@ -7,8 +7,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../input";
 import { toast } from "react-toastify";
 import { axios } from "@/config/axios";
-import { useMetamask } from "@/contexts/metamask";
+import { useAuth } from "@/contexts/metamask";
 import { DappKitFunctions } from "@/utils/dappKitFunctions";
+import { on } from "events";
 
 const schema = yup.object({
     email: yup.string().required("Esse campo é obrigatório."),
@@ -30,7 +31,7 @@ interface LoginModalProps {
 
 const LoginModal = ({ setShowModal, redirect, showModal, loginEndpoint, onlyMetamask }: LoginModalProps) => {
     const router = useRouter();
-    const { connectMetamask, account } = useMetamask();
+    const { connectMetamask, setAccount } = useAuth();
     const {
         control,
         handleSubmit,
@@ -45,6 +46,7 @@ const LoginModal = ({ setShowModal, redirect, showModal, loginEndpoint, onlyMeta
             if (!loginEndpoint) return;
 
             const response = await axios.post(loginEndpoint, data);
+            setAccount(data.email)
             toast.success("Login feito com sucesso");
             router.push(redirect);
         } catch (error: any) {
@@ -58,25 +60,32 @@ const LoginModal = ({ setShowModal, redirect, showModal, loginEndpoint, onlyMeta
     };
 
     const connectWithMetamask = async () => {
+        const addrs = await connectMetamask();
+        const instance = new DappKitFunctions();
         try {
-            const addrs = await connectMetamask();
-            const instance = new DappKitFunctions()
-            console.log(addrs)
-            const res = await instance.userGetTransaction('schools', [addrs])
-            console.log(res)
-            if (res) {
-                toast.success("Login feito com sucesso");
-                return
+            if (onlyMetamask) {
+                const res = await instance.userGetTransaction("government");
+                if (res == addrs) {
+                    toast.success("Login feito com sucesso");
+                    router.push(redirect);
+                    return;
+                }
+                toast.error("Essa não é a carteira do governo");
+            } else {
+                const res = await instance.userGetTransaction("schools", [addrs]);
+
+                if (res) {
+                    toast.success("Login feito com sucesso");
+                    router.push(redirect);
+                    return;
+                }
+                toast.error("Essa conta não está cadastrada na plataforma");
             }
-            toast.error("Essa conta não está cadastrada na plataforma")
         } catch (error) {
             toast.error("Erro ao conectar com a Metamask");
             console.error(error);
         }
-        
-        // router.push(redirect);
-    }
-
+    };
 
     return (
         <ModalDrawer

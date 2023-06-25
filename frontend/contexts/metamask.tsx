@@ -4,24 +4,24 @@ import React, { createContext, useState, useContext, SetStateAction } from "reac
 import { toast } from "react-toastify";
 import { Web3 } from "web3";
 
-interface MetamaskContextInterface {
+interface AuthContextInterface {
     account: string | null;
     setAccount(account: string | null): void;
     loading: boolean;
     setLoading(loading: boolean): void;
-    connectMetamask: () => Promise<void>;
+    connectMetamask: () => Promise<string | undefined>;
 }
 
-const MetamaskContext = createContext<MetamaskContextInterface | null>(null);
+const AuthContext = createContext<AuthContextInterface | null>(null);
 
-export default function MetamaskProvider({ children }: any) {
+export default function AuthProvider({ children }: any) {
     const [account, setAccount] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
     const changeNetwork = async () => {
         const provider = (window as any).ethereum;
         const chainId = 11155111;
-        console.log(provider.networkVersion);
+   
         if (provider.networkVersion != chainId) {
             await provider.request({
                 method: "wallet_switchEthereumChain",
@@ -44,8 +44,8 @@ export default function MetamaskProvider({ children }: any) {
                 await web3Connection.connect();
                 const addrs = await web3Connection.getAddress();
                 setAccount(addrs);
-                return addrs;
                 console.log("Metamask conectada com sucesso! Wallet address: ", account);
+                return addrs;
             } catch (error) {
                 toast.error("Erro ao conectar com a Metamask");
                 console.error(error);
@@ -54,7 +54,7 @@ export default function MetamaskProvider({ children }: any) {
     };
 
     return (
-        <MetamaskContext.Provider
+        <AuthContext.Provider
             value={{
                 account,
                 setAccount,
@@ -64,13 +64,13 @@ export default function MetamaskProvider({ children }: any) {
             }}
         >
             {children}
-        </MetamaskContext.Provider>
+        </AuthContext.Provider>
     );
 }
 
-export function useMetamask() {
-    const context = useContext(MetamaskContext);
-    if (!context) throw new Error("useMetamask must be used within a MetamaskProvider");
+export function useAuth() {
+    const context = useContext(AuthContext);
+    if (!context) throw new Error("useAuth must be used within a AuthProvider");
     const { account, setAccount, loading, setLoading, connectMetamask } = context;
     return {
         account,

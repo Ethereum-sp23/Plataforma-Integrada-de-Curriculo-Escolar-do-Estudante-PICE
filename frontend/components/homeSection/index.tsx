@@ -3,8 +3,6 @@ import React, { useEffect } from "react";
 import LandingContainer from "../landingContainer";
 import Link from "next/link";
 import { Button, ModalDrawer, ModalFooter } from "@taikai/rocket-kit";
-import { useMetamask } from "@/contexts/metamask";
-import { useRouter } from "next/navigation";
 import LoginModal from "../LoginModal";
 
 const HomeSection = () => {

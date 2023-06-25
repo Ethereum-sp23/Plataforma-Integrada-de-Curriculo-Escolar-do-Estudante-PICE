@@ -1,4 +1,4 @@
-import MetamaskProvider from "@/contexts/metamask";
+import AuthProvider from "@/contexts/metamask";
 import "../styles/globals.css";
 import { Montserrat } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -17,10 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html className="scroll-smooth">
             <body className={montserrat.className}>
-                <MetamaskProvider>
+                <AuthProvider>
                     {children}
                     <ToastContainer />
-                </MetamaskProvider>
+                </AuthProvider>
             </body>
         </html>
     );

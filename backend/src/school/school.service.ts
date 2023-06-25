@@ -130,19 +130,24 @@ export class SchoolService {
     return 'Usuário logado com sucesso!';
   }
 
-  async getStudents(email: string): Promise<string | Response> {
-    const { data, error } = await supabase
-      .from('gov_schools')
-      .select('*')
-      .eq('email', email);
+  async getStudents(account: string): Promise<string | Response> {
+    let accountData = account;
+    if (!account.startsWith('0x')) {
+      const { data, error } = await supabase
+        .from('gov_schools')
+        .select('*')
+        .eq('email', account);
 
-    if (error) {
-      throw new Error(error.message);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      accountData = data[0].address;
     }
 
     const contract = new DappKitFunctions();
     const res = await contract.adminGetTransaction('getStudentsBySchool', [
-      data[0].address,
+      accountData.toString(),
     ]);
 
     if (res.length === 0) {
@@ -163,7 +168,7 @@ export class SchoolService {
     for (const student of students) {
       const studentData = await contract.adminGetTransaction(
         'allowedSchoolsStatus',
-        [student.address, data[0].address],
+        [student.address, accountData],
       );
       console.log(studentData);
       studentsWithStatus.push({ ...student, status: studentData });

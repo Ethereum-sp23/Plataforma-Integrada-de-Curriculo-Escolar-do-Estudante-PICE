@@ -47,7 +47,9 @@ export class GovernmentService {
 
     const contract = new DappKitFunctions();
 
-    await contract.adminSendTransaction('createSchool', [account.address]);
+    await contract.adminSendTransaction('createSchool', [
+      account.address.toString(),
+    ]);
     const hashedPassword = await bcrypt.hash(body.password, 8);
     const { error } = await supabase.from('gov_schools').insert([
       {
@@ -58,8 +60,6 @@ export class GovernmentService {
         private_key: account.privateKey,
       },
     ]);
-
-    await contract.adminSendTransaction('createSchool', [account.address]);
 
     if (error) {
       throw new Error(error.message);

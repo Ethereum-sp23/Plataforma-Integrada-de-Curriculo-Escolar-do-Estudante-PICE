@@ -5,6 +5,7 @@ import {
   Post,
   HttpException,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { CreateNFTBody, LoginBodyDto } from './dto/school.dto';
@@ -54,10 +55,11 @@ export class SchoolController {
     }
   }
 
-  @Get('/getStudents/:email')
-  async getStudents({ email }): Promise<Response> {
+  @Get('/getStudents/:account')
+  async getStudents(@Param() { account }): Promise<Response> {
+    console.log(account);
     try {
-      const res = await this.SchoolService.getStudents(email);
+      const res = await this.SchoolService.getStudents(account);
       return {
         message: typeof res === 'string' ? res : 'Students found!',
         data: typeof res === 'string' ? null : res.data,
