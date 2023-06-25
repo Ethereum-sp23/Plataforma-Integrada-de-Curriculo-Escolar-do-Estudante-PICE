@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { axios } from "@/config/axios";
 
 interface Badge {
-    image: StaticImageData;
+    image: string;
     metadata: string;
 }
 
@@ -50,9 +50,11 @@ const Student = ({ params }: { params: { id: string } }) => {
             <Card classes="m-6" title="Histórico de atividades">
                 {!loading ? (
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {badges.map((item, index) => (
+                        { badges.length > 0 ? badges.map((item, index) => (
                             <CurriculumItem key={index} metadata={item.metadata} image={item.image} />
-                        ))}
+                        )) : (
+                            <p>Nenhuma atividade encontrada</p>
+                        )}
                     </div>
                 ) : (
                     <LoadingState cardsNumber={8} center lines={14} type="text" />

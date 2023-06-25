@@ -10,7 +10,7 @@ import { axios } from "@/config/axios";
 import { toast } from "react-toastify";
 
 interface Badge {
-    image: StaticImageData;
+    image: string;
     metadata: string;
 }
 
