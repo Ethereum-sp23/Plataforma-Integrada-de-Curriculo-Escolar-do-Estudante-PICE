@@ -17,6 +17,7 @@ contract EducationSystem is ERC721URIStorage {
    mapping(uint256 => SchoolNFT) public schoolNFTs;
    mapping(address => uint256[]) public schoolNFTsBySchool;
    mapping(uint => string) public ipfsById;
+   mapping(address => address[]) public studentsBySchool;
 
    struct Student {
       address[] schoolsAllowed;
@@ -59,30 +60,31 @@ contract EducationSystem is ERC721URIStorage {
       schools[_schoolAddress] = true;
    }
 
-   function createStudent(address _studentAddress) public onlyGovernment {
+   function createStudent(address _studentAddress, address _schoolAddress) public onlyGovernment {
       students[_studentAddress] = Student(
          new address[](0),
          new uint256[](0)
       );
       students[_studentAddress].schoolsAllowed.push(msg.sender);
+      studentsBySchool[_schoolAddress].push(_studentAddress);
    }
 
-   function getStudent(address wallet) public view returns (address[] memory, uint256[] memory) {
-       return (students[wallet].schoolsAllowed, students[wallet].ownedNFTs);
+   function getStudent(address _studentAddress) public view returns (address[] memory, uint256[] memory) {
+       return (students[_studentAddress].schoolsAllowed, students[_studentAddress].ownedNFTs);
    }
 
     function deleteStudent(address _studentAddress) public onlySchoolsOrGoverment {
         delete students[_studentAddress];
     }
 
-    function issueNFT(address _studentAddress, string memory tokenURI) public onlySchoolsOrGoverment {
+    function issueNFT(address _studentAddress, string memory _tokenURI) public onlySchoolsOrGoverment {
         uint256 newNFTId = _tokenIds.current() + 1;
         _mint(_studentAddress, newNFTId);
-        _setTokenURI(newNFTId, tokenURI);
+        _setTokenURI(newNFTId, _tokenURI);
         schoolNFTs[newNFTId] = SchoolNFT(newNFTId, msg.sender, _studentAddress, block.timestamp);
         schoolNFTsBySchool[msg.sender].push(newNFTId);
         students[_studentAddress].ownedNFTs.push(newNFTId);
-        ipfsById[newNFTId] = tokenURI;
+        ipfsById[newNFTId] = _tokenURI;
         _tokenIds.increment();
     }
 
@@ -95,12 +97,16 @@ contract EducationSystem is ERC721URIStorage {
         delete schoolNFTs[_tokenId];
     }
 
-    function getSchoolNFTs(uint256 id) public view returns (address, address, uint256) {
-       return (schoolNFTs[id].schoolAddress, schoolNFTs[id].studentAddress, schoolNFTs[id].issuedAt);
+    function getSchoolNFTs(uint256 _id) public view returns (address, address, uint256) {
+       return (schoolNFTs[_id].schoolAddress, schoolNFTs[_id].studentAddress, schoolNFTs[_id].issuedAt);
     }
 
-    function getIPFSByID(uint tokenId) public view returns (string memory) {
-        return ipfsById[tokenId];
+    function getIPFSByID(uint _tokenId) public view returns (string memory) {
+        return ipfsById[_tokenId];
+    }
+
+    function getStudentsBySchool(address _schoolAddress) public view returns (address[] memory) {
+        return studentsBySchool[_schoolAddress];
     }
 
     function seeOwnedNFTs(
