@@ -21,7 +21,7 @@ export class GovernmentController {
   constructor(private readonly GovernmentService: GovernmentService) {}
 
   @Get('getNameByAddress/:address')
-  getNameByAddress(@Param() params: GetNameByAddress): Promise<String> {
+  getNameByAddress(@Param() params: GetNameByAddress): Promise<string> {
     return this.GovernmentService.getNameByAddress(params);
   }
 

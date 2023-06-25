@@ -3,8 +3,10 @@ import { supabase } from 'src/main';
 import { DappKitFunctions } from 'src/utils/dappKitFunctions';
 import PinataClient from '@pinata/sdk';
 // import Web3 from 'web3';
+import bcrypt from 'bcryptjs';
+import { LoginBodyDto } from './dto/school.dto';
 
-interface CreateNFTBody {}
+// interface CreateNFTBody {}
 @Injectable()
 export class SchoolService {
   private pinata: PinataClient;
@@ -41,7 +43,8 @@ export class SchoolService {
     const { IpfsHash } = await this.pinata.pinFileToIPFS(ReadableStream, {
       pinataMetadata: {
         image: filename,
-        name: title}
+        name: title,
+      },
     });
 
     return IpfsHash;
@@ -61,9 +64,27 @@ export class SchoolService {
     const res = await contract.adminGetTransaction('getSchoolNFTs', [address]);
 
     for (const NFTid in res) {
-      
     }
 
     return res;
+  }
+
+  async login(body: LoginBodyDto): Promise<string> {
+    const { data, error } = await supabase
+      .from('gov_schools')
+      .select('*')
+      .eq('email', body.email);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    const isMatch = await bcrypt.compare(data[0].password, body.password);
+
+    if (!isMatch) {
+      throw new Error('Não foi possivel entrar');
+    }
+
+    return 'Usuário logado com sucesso!';
   }
 }

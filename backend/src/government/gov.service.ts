@@ -4,10 +4,11 @@ import { CreatePersonBody, CreateSchoolBody } from './dto/government.dto';
 import Web3 from 'web3';
 import { DappKitFunctions } from '../utils/dappKitFunctions';
 import { CreateAccountResponse } from './dto/government.dto';
+import bcrypt from 'bcryptjs';
 
 @Injectable()
 export class GovernmentService {
-  async getNameByAddress(params): Promise<String> {
+  async getNameByAddress(params): Promise<string> {
     const { error, data } = await supabase
       .from('gov_people')
       .select('*')
@@ -48,11 +49,13 @@ export class GovernmentService {
 
     await contract.adminSendTransaction('createSchool', [account.address]);
 
+    const hashedPassword = await bcrypt.hash(body.password, 8);
+
     const { error } = await supabase.from('gov_schools').insert([
       {
         name: body.name,
         email: body.email,
-        password: body.password,
+        password: hashedPassword,
         address: account.address,
         private_key: account.privateKey,
       },
