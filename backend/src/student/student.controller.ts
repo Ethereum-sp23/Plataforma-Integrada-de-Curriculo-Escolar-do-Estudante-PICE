@@ -1,9 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { Param } from '@nestjs/common';
 
 interface GetAllNfts {
   address: string;
+}
+
+interface Response {
+  message: string;
+  data?: any;
 }
 
 @Controller()
@@ -15,8 +20,16 @@ export class StudentController {
     return this.StudentService.getAllNfts(params);
   }
 
-  @Get('getStudent/:name')
-  async getStudent(@Param() { name }): Promise<string> {
-    return this.StudentService.getStudent(name);
+  @Get('getStudentByName/:name')
+  async getStudent(@Param() { name }): Promise<Response> {
+    try {
+      const res = await this.StudentService.getStudentByName(name);
+      return {
+        message: typeof res === 'string' ? res : 'Students get with success',
+        data: typeof res === 'string' ? null : res.data,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
