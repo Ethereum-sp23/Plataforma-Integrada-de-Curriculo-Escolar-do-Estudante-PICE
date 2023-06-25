@@ -139,4 +139,20 @@ No Backend, as informações dos alunos, assim como das instituições, são sal
 
 Por fim, o bloco blockchain consiste num contrato, em que é possível cadastrar uma nova instituição de ensino, criar, consultar e excluir um estudante, emitir, consultar e destruir um NFT e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
 
+## Arquitetura da solução
+
+A arquitetura de solução é um conjunto de diretrizes e decisões de design que orientam o desenvolvimento de um projeto ou sistema. Ela descreve a estrutura, os componentes, as interações e as tecnologias envolvidas na solução, fornecendo uma visão abrangente de como os diferentes elementos se relacionam e funcionam juntos para atender aos requisitos e objetivos estabelecidos. A arquitetura de solução serve para garantir a eficiência, escalabilidade, segurança e qualidade da solução. Abaixo, encontra-se a arquitetura do PICE:
+
+![1687668532979](image/README/1687668532979.png)
+
+1. Frontend: O frontend do projeto é desenvolvido em React, utilizando o framework Next.js para facilitar a construção de aplicações web escaláveis. Para estilização, é utilizado o Tailwind CSS, um framework de design responsivo e altamente customizável. Além disso, o projeto integra as seguintes tecnologias:
+
+- Metamask: Uma extensão de navegador que funciona como uma ponte entre o navegador web e a blockchain Ethereum. Ela permite que os usuários acessem e gerenciem suas contas Ethereum através de carteiras digitais seguras fornecidas pela Metamask.
+- dAppKit: É uma ferramenta que simplifica a execução de funções nas redes blockchain. No projeto, o dAppKit foi utilizado para facilitar a conexão entre o frontend e a Metamask, tornando mais simples a interação com a blockchain.
+- RocketKit: É um conjunto de componentes estilizados que seguem um padrão visual consistente. Esses componentes são utilizados no projeto para garantir uma estilização uniforme e possibilitar seu reuso em outros projetos, incluindo este que você está lendo, que faz uso de vários componentes da plataforma Taikai.
+
+2. Backend: O backend do projeto é construído utilizando o framework Nest.js, que proporciona uma estrutura escalável para o desenvolvimento de APIs. O banco de dados é gerenciado pelo Supabase, uma plataforma que simplifica as operações de banco de dados. Além disso, o dAppKit é utilizado para estabelecer a conexão com a blockchain e facilitar a execução de funções nos contratos inteligentes. Essa combinação de tecnologias permite uma arquitetura robusta e eficiente para a solução.
+3. Blockchain: A tecnologia blockchain desempenha um papel fundamental no projeto, sendo responsável pela gestão de todo o sistema de currículos dos estudantes. Através de um contrato inteligente desenvolvido em Solidity, o Governo tem a capacidade de criar instituições de ensino verificadas e adicionar novos estudantes, que são atribuídos a essas instituições. Além disso, as instituições têm o poder de criar e excluir tokens não fungíveis (NFTs) que representam as atividades dos alunos. Para obter mais informações sobre as funcionalidades disponíveis no contrato, consulte a seção "Regras de Negócio". Por fim, o contrato foi implantado na Testnet da rede Sepolia, utilizando a Truffle Suite como plataforma de desenvolvimento.
+
+
 ## Estrutura de Pastas
