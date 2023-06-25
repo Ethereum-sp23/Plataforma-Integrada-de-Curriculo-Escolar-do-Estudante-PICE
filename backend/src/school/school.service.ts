@@ -20,15 +20,21 @@ export class SchoolService {
   }
 
   async mintNFT(
-    { metadata, studentAddress, schoolEmail },
+    { metadata, studentAddress, schoolAuth },
     file,
   ): Promise<string> {
+
+    let desiredAuthMethod = ""
+    if (schoolAuth.includes('@') && !schoolAuth.includes('0x')) desiredAuthMethod = 'email'
+    else desiredAuthMethod = 'address'
+
+    console.log("----------", desiredAuthMethod)
     const { data, error } = await supabase
       .from('gov_schools')
       .select('*')
-      .eq('email', schoolEmail);
+      .eq(desiredAuthMethod, schoolAuth);
+    
 
-      console.log(schoolEmail)
     if (error) {
       throw new Error(error.message);
     }

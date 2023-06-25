@@ -2,7 +2,7 @@ export interface CreateNFTBody {
   image: File;
   metadata: string;
   studentAddress: string;
-  schoolEmail: string;
+  schoolAuth: string;
 }
 
 export interface LoginBodyDto {
