@@ -7,7 +7,7 @@ import Modal from "@/components/modal";
 import SeeSchools from "@/components/seeSchools";
 import SeeStudent from "@/components/seeStudents";
 import React from "react";
-import AsyncSelect from "../asyncSelect";
+import AsyncSelect from "../../components/asyncSelect";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { axios } from "@/config/axios";
@@ -43,7 +43,7 @@ const GovernmentDashboard = () => {
         const reqData = {
             studentId: selectedId,
             schoolIds,
-        }
+        };
         try {
             const response = await axios.post("/government/setStudent", reqData);
             toast.success("Operação realizada com sucesso!");
