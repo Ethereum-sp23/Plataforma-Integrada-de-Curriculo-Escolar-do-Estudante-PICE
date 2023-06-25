@@ -5,7 +5,7 @@ import PinataClient from '@pinata/sdk';
 // import Web3 from 'web3';
 import bcrypt from 'bcryptjs';
 import { LoginBodyDto } from './dto/school.dto';
-
+import axios from 'axios';
 // interface CreateNFTBody {}
 @Injectable()
 export class SchoolService {
@@ -29,11 +29,49 @@ export class SchoolService {
     if (error) {
       throw new Error(error.message);
     }
+    //--------------------------------------------------------------------------------------
+    if (!image) throw new Error('Please select an image to upload');
+
+    const imageFormData = new FormData();
+    imageFormData.append('file', image);
+
+    const imageUploadingResponse = await axios({
+      method: 'post',
+      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      data: imageFormData,
+      headers: {
+        pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+        pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    const uploadedImageLink = `https://ipfs.io/ipfs/${imageUploadingResponse.data.IpfsHash}`;
+
+    //--------------------------------------------------------------------------------------
+
+    const NFTFormData = new FormData();
+    NFTFormData.append('image', uploadedImageLink);
+    NFTFormData.append('metadata', metadata);
+
+    const NFTUploadingResponse = await axios({
+      method: 'post',
+      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      data: NFTFormData,
+      headers: {
+        pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+        pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    const finalIPFSLink = `https://ipfs.io/ipfs/${NFTUploadingResponse.data.IpfsHash}`;
 
     const contract = new DappKitFunctions();
 
     await contract.userSendTransaction(data[0].private_key, 'issueNFT', [
       studentAddress,
+      finalIPFSLink,
     ]);
 
     return 'NFT created successfully!';
