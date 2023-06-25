@@ -104,4 +104,9 @@ export class SchoolController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @Get()
+  hello(): string {
+    return 'Hello World!';
+  }
 }
