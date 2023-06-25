@@ -123,4 +123,20 @@ As regras de negócio do contrato "EducationSystem" são as seguintes:
    - A função `seeOwnedNFTs` permite que qualquer pessoa consulte os IDs dos NFTs de propriedade de um determinado estudante, fornecendo o endereço do estudante como parâmetro.
 9. Consulta da Origem de um NFT:
 
-   - A função `seeNFTOrigin` permite que qualquer pessoa consulte o endereço da escola emissora de um determinado NFT, fornecendo o ID do NFT como parâmetro.
+   - A função `seeNFTOrigin` permite que qualquer pessoa consulte o endereço da escola emissora de um determinado NFT, fornecendo o ID do NFT como parâmetro.Estrutura de pastas
+
+## Diagrama de Blocos
+
+Um diagrama de blocos é uma representação gráfica que descreve a estrutura e o fluxo de um sistema ou processo. Ele usa blocos ou retângulos para representar diferentes etapas ou componentes do sistema, e setas para indicar a direção do fluxo de informações ou controle entre os blocos.
+
+O objetivo principal de um diagrama de blocos é visualizar de forma clara e concisa o funcionamento interno de um sistema complexo, mostrando como os diferentes componentes se relacionam e interagem entre si, ajudando a identificar os principais elementos do sistema, suas funções e como estão conectados, permitindo uma compreensão geral do processo ou sistema em questão.
+
+![1687658514257](image/README/1687658514257.png)
+
+No diagrama de blocos acima existem dois atores principais que interagem com o sistema: aluno e instituição de ensino. Esses atores interagem com o sistema através da interface frontend. Para o aluno, basta pesquisar seu nome e todo seu currículo aparece para visualização. Para a instituição, após o cadastro do Governo no sistema através da API, com sua carteira, é necessário realizar o login, visto que, para criar NFTs das atividades dos alunos, é necessário assinar as transações.
+
+No Backend, as informações dos alunos, assim como das instituições, são salvas e somente acessadas pelo Governo. Esse bloco simula o Sistema Educacional Brasileiro (SEB), um cadastro contínuo, preenchido e atualizado pelas intituições de educação que reúne dados do corpo docente e discente e que permite o compartilhamento
+
+Por fim, o bloco blockchain consiste num contrato, em que é possível cadastrar uma nova instituição de ensino, criar, consultar e excluir um estudante, emitir, consultar e destruir um NFT e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
+
+## Estrutura de Pastas
