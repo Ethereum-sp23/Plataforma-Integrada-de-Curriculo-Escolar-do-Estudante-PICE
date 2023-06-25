@@ -172,19 +172,23 @@ export class GovernmentService {
     };
   }
 
-  async setStudent(stundetId, schoolId): Promise<string | Response> {
+  async setStudent(studentId, schoolId): Promise<string | Response> {
     const { data: student, error: studentError } = await supabase
       .from('gov_people')
       .select('address')
-      .eq('id', stundetId);
+      .eq('id', studentId);
+
+    if (studentError) {
+      throw new HttpException(studentError.message, HttpStatus.BAD_REQUEST);
+    }
 
     const { data: school, error: schoolError } = await supabase
-      .from('gov_people')
+      .from('gov_schools')
       .select('address')
       .eq('id', schoolId);
 
-    if (studentError || schoolError) {
-      throw new Error(studentError.message || schoolError.message);
+    if (schoolError) {
+      throw new HttpException(schoolError.message, HttpStatus.BAD_REQUEST);
     }
 
     if (!student || !school) {
@@ -192,10 +196,19 @@ export class GovernmentService {
     }
 
     const contract = new DappKitFunctions();
+    console.log('Dados chegando!!!', student[0].address, school[0].address);
     await contract.adminSendTransaction('addStudentToSchool', [
       student[0].address,
       school[0].address,
     ]);
+
+    return "Student's school updated successfully!";
+  }
+
+  async setStudentAdmin(studentId: any, schoolIds: any) {
+    for (let i = 0; i < schoolIds.length; i++) {
+      await this.setStudent(studentId, schoolIds[i]);
+    }
 
     return "Student's school updated successfully!";
   }

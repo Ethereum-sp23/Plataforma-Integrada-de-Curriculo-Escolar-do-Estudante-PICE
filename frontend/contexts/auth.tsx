@@ -1,5 +1,5 @@
 "use client";
-import { Web3Connection } from "@taikai/dappkit";
+import { Web3Connection } from "@taikai/dappkit/dist/src/base/web3-connection";
 import React, { createContext, useState, useContext, SetStateAction, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Web3 } from "web3";

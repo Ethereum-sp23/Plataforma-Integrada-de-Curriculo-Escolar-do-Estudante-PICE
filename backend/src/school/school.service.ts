@@ -19,23 +19,31 @@ export class SchoolService {
     );
   }
 
-  async mintNFT(
-    { metadata, studentAddress, schoolAuth },
-    file,
-  ): Promise<string> {
-    let desiredAuthMethod = '';
-    if (schoolAuth.includes('@') && !schoolAuth.includes('0x'))
+  async mintNFT({ metadata, studentId, schoolAuth }, file): Promise<string> {
+    let desiredAuthMethod = 'address';
+    if (!schoolAuth.startsWith('0x')) {
       desiredAuthMethod = 'email';
-    else desiredAuthMethod = 'address';
+    } else {
+      desiredAuthMethod = 'address';
+    }
 
     console.log('----------', desiredAuthMethod);
     const { data, error } = await supabase
       .from('gov_schools')
       .select('*')
-      .eq(desiredAuthMethod, schoolAuth);
+      .ilike(desiredAuthMethod, schoolAuth);
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+
+    const { data: studentData, error: studentError } = await supabase
+      .from('gov_people')
+      .select('address')
+      .eq('id', studentId);
+
+    if (studentError) {
+      throw new HttpException(studentError.message, HttpStatus.BAD_REQUEST);
     }
     //--------------------------------------------------------------------------------------
 
@@ -75,7 +83,7 @@ export class SchoolService {
 
     console.log(data[0].private_key);
     await contract.userSendTransaction(data[0].private_key, 'issueNFT', [
-      studentAddress,
+      studentData[0].address,
       finalIPFSLink,
     ]);
 
@@ -155,7 +163,7 @@ export class SchoolService {
     }
 
     const { data: students, error: studentsError } = await supabase
-      .from('gov_students')
+      .from('gov_people')
       .select('id, name, email, address, course')
       .in('address', res);
 

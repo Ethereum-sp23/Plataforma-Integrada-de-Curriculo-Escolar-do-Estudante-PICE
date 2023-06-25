@@ -19,9 +19,16 @@ type Student = {
 };
 
 const Institution = () => {
-    
+    const {account} = useAuth()
 
-    return <SeeStudent link="/school/getStudents/" />;
+    const actionItems = (wallet: string) => {
+        return [
+            <ActionItem key={1} icon="visibility" label="Ver informações" link={"/student/" + wallet} />,
+            <ActionItem key={2} icon="edit" label="Adicionar atividade" link={`/institution/${wallet}/edit/`} />,
+        ];
+    };
+
+    return <SeeStudent actionItems={actionItems} link={"/school/getStudents/" + account}/>;
 };
 
 export default Institution;

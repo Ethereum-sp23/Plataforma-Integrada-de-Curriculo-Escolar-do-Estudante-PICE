@@ -42,23 +42,21 @@ const EditStudent = ({ params }: EditStudentProps) => {
         const bodyFormData = new FormData();
         bodyFormData.append("file", file);
         bodyFormData.append("metadata", data.name);
-        bodyFormData.append("studentAddress", params.id);
+        bodyFormData.append("studentId", params.id);
         bodyFormData.append("schoolAuth", account as string);
 
         try {
-            const res = await axios.post('/school/createNFT', bodyFormData, {
+            const res = await axios.post("/school/createNFT", bodyFormData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            toast.success("Atividade criada com sucesso.")
-            console.log(res)
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+        toast.success("Atividade criada com sucesso.")
+            console.log(res);
         } catch (error) {
-            console.log(error)
-            toast.error("Ocorreu um erro ao criar o NFT.")
+            console.log(error);
+            toast.error("Ocorreu um erro ao criar o NFT.");
         }
-         
-           
     };
 
     return (

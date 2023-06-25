@@ -1,19 +1,23 @@
 "use client";
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import StudentHeader from "@/components/studentHeader";
 import Card from "@/components/card";
 import CurriculumItem, { CurriculumItemProps } from "@/components/curriculumItem";
-import { curriculumItems, studentInfoItems } from "./data";
-import StudentInfoItem from "@/components/studentInfoItem";
-import Medals from "@/components/medals";
 import { LoadingState } from "@taikai/rocket-kit";
 import { toast } from "react-toastify";
 import { axios } from "@/config/axios";
 
+interface Badge {
+    image: StaticImageData;
+    metadata: string;
+}
+
 const Student = ({ params }: { params: { id: string } }) => {
     const [loading, setLoading] = React.useState(true);
     const [student, setStudent] = React.useState(null);
+
+    const [badges, setBadges] = React.useState<Badge[]>([]);
 
     const getInfo = async () => {
         try {
@@ -23,11 +27,21 @@ const Student = ({ params }: { params: { id: string } }) => {
             console.log(error);
             toast.error("Erro ao carregar dados do estudante");
         }
-        setLoading(false);
+    };
+
+    const getBadges = async () => {
+        try {
+            const res = await axios.get("/student/getAllNfts/" + params.id);
+            setBadges(res.data);
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+            toast.error("Erro ao carregar dados do estudante");
+        }
     };
 
     React.useEffect(() => {
-        getInfo();
+        Promise.all([getInfo(), getBadges()]).then(() => setLoading(false));
     }, []);
 
     return (
@@ -36,8 +50,8 @@ const Student = ({ params }: { params: { id: string } }) => {
             <Card classes="m-6" title="Histórico de atividades">
                 {!loading ? (
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {curriculumItems.map((item, index) => (
-                            <CurriculumItem key={index} {...item} />
+                        {badges.map((item, index) => (
+                            <CurriculumItem key={index} metadata={item.metadata} image={item.image} />
                         ))}
                     </div>
                 ) : (

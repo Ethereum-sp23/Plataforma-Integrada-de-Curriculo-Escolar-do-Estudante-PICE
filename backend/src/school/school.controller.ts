@@ -47,6 +47,8 @@ export class SchoolController {
     @Body() body: CreateNFTBody,
   ): Promise<Response> {
     try {
+      console.log(file);
+      console.log(body);
       const newFile = new Readable();
       newFile.push(file.buffer);
       newFile.push(null);
@@ -56,6 +58,7 @@ export class SchoolController {
         message: res,
       };
     } catch (error) {
+      console.log(error);
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
