@@ -21,7 +21,7 @@ export class StudentService {
     console.log('IDS: ', allIDs);
 
     const allIPFSLinks = [];
-    for (let item in allIDs) {
+    for (const item in allIDs) {
       // para cada ID, pegar o link do IPFS
       console.log('adicionando o link do IPFS do NFT de ID ', item);
       const retrievedIPFSLink = await contract.adminGetTransaction(
@@ -32,9 +32,9 @@ export class StudentService {
       allIPFSLinks.push(retrievedIPFSLink);
     }
 
-    let allNftsResponse = [];
+    const allNftsResponse = [];
 
-    for (let link in allIPFSLinks) {
+    for (const link in allIPFSLinks) {
       console.log('pegando dados do link ', link);
       const res = await axios.get(link);
       allNftsResponse.push(res.data);
@@ -47,7 +47,7 @@ export class StudentService {
     const { error, data } = await supabase
       .from('gov_people')
       .select('*')
-      .ilike('name', name);
+      .textSearch('name', `'${name}'`);
 
     if (error) {
       throw new Error(error.message);
@@ -57,10 +57,10 @@ export class StudentService {
       return 'No student found with this name!';
     }
 
-    let students = [];
+    const students = [];
 
     for (const person of data) {
-      let student = {
+      const student = {
         name: person.name,
         address: person.address,
       };

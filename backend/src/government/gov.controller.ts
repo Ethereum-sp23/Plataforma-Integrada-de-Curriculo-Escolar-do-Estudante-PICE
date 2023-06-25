@@ -41,7 +41,6 @@ export class GovernmentController {
   @Post('createSchool')
   async createSchool(@Body() body: CreateSchoolBody): Promise<Response> {
     try {
-      console.log(body);
       const response = await this.GovernmentService.createSchool(body);
       return {
         message: response,
