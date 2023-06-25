@@ -1,4 +1,4 @@
-const contract = artifacts.require("HelloWorld");
+const contract = artifacts.require("EducationSystem");
 
 module.exports = function(deployer) {
     // deployment steps

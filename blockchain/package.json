@@ -8,6 +8,6 @@
 		"web3": "^4.0.1"
 	},
 	"scripts": {
-		"deplloy": "node dapp-kit-deploy.ts"
+		"deploying": "node dapp-kit-deploy.ts"
 	}
 }
