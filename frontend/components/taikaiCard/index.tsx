@@ -5,9 +5,10 @@ import React from "react";
 interface TaikaiCardProps {
     title: string;
     id: number;
+    infos?: string[];
 }
 
-const TaikaiCard = ({ title, id }: TaikaiCardProps) => {
+const TaikaiCard = ({ title, id, infos }: TaikaiCardProps) => {
     return (
         <Link href={"/student/" + id} className="hover:-translate-y-2 transition-all">
             <div className="min-h-[200px] border rounded-lg overflow-hidden p-8">
@@ -22,11 +23,12 @@ const TaikaiCard = ({ title, id }: TaikaiCardProps) => {
                     />
                 </div>
                 <p className="text-lg font-bold mb-4">{title}</p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident distinctio tempore
-                    aspernatur iusto, deleniti deserunt minima labore vero omnis inventore optio accusamus aut, dolorem,
-                    exercitationem ad nesciunt officia quia.
-                </p>
+                {infos &&
+                    infos.map((info, index) => (
+                        <p key={index} className="text-sm text-gray-500 break-words">
+                            {info}
+                        </p>
+                    ))}
             </div>
         </Link>
     );
