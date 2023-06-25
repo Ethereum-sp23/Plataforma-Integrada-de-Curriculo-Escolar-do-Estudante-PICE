@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { supabase } from 'src/main';
 import { CreatePersonBody, CreateSchoolBody } from './dto/government.dto';
 import Web3 from 'web3';
@@ -37,7 +37,7 @@ export class GovernmentService {
     ]);
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
     return 'Person created successfully!';
@@ -66,7 +66,7 @@ export class GovernmentService {
     ]);
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
     return 'School created successfully!';
@@ -84,7 +84,10 @@ export class GovernmentService {
       .eq('email', email);
 
     if (selectError || deleteError) {
-      throw new Error(selectError.message || deleteError.message);
+      throw new HttpException(
+        selectError.message || deleteError.message,
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const contract = new DappKitFunctions();

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { supabase } from 'src/main';
 import { DappKitFunctions } from 'src/utils/dappKitFunctions';
 import PinataClient from '@pinata/sdk';
@@ -36,10 +36,17 @@ export class SchoolService {
     
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
     //--------------------------------------------------------------------------------------
-    if (!file) throw new Error('Please select an image to upload');
+
+    if (!image) {
+      throw new HttpException(
+        'Please select an image to upload',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
 
     const imageFormData = new FormData();
     imageFormData.append('file', file);
@@ -84,7 +91,7 @@ export class SchoolService {
       .eq('address', address);
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
     const contract = new DappKitFunctions();
@@ -103,17 +110,23 @@ export class SchoolService {
       .eq('email', body.email);
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
     if (data.length === 0) {
-      throw new Error('Não foi possível entrar');
+      throw new HttpException(
+        'Não foi possível entrar',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const isMatch = await bcrypt.compare(body.password, data[0].password);
 
     if (!isMatch) {
-      throw new Error('Não foi possível entrar');
+      throw new HttpException(
+        'Não foi possível entrar',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     return 'Usuário logado com sucesso!';
@@ -128,7 +141,7 @@ export class SchoolService {
         .eq('email', account);
 
       if (error) {
-        throw new Error(error.message);
+        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
       }
 
       accountData = data[0].address;
@@ -149,7 +162,7 @@ export class SchoolService {
       .in('address', res);
 
     if (studentsError) {
-      throw new Error(studentsError.message);
+      throw new HttpException(studentsError.message, HttpStatus.BAD_REQUEST);
     }
 
     const studentsWithStatus = [];
