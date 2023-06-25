@@ -16,9 +16,8 @@ const HomeSection = () => {
         <LandingContainer>
             <div className="absolute bg-white w-1 h-[55%] rounded left-10 top-[30%]"></div>
             <div className="absolute top-[30%] left-20 flex flex-col gap-4 items-start text-white">
-                <h3 className="text-lg">Plataforma integrada de currículo escolar do estudante</h3>
                 <h1 className="text-9xl font-bold">PICE</h1>
-                <h3 className="uppercase text-2xl">Conectando alunos e instituições</h3>
+                <h3 className="uppercase text-2xl">Plataforma integrada de currículo escolar do estudante</h3>
                 <p className="w-[50%] text-lg mb-2">
                     A PICE é uma plataforma de registro acadêmico baseada em blockchain que capacita os estudantes,
                     permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para

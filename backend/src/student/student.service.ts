@@ -25,10 +25,12 @@ export class StudentService {
       'fazendo transação para pegar todos os IDs dos NFTs do usuario ',
       address,
     );
-    
-    const allIDs = await contract.userGetTransaction(data[0].private_key, 'seeOwnedNFTs', [
-      address,
-    ]);
+
+    const allIDs = await contract.userGetTransaction(
+      data[0].private_key,
+      'seeOwnedNFTs',
+      [address],
+    );
     console.log('IDS: ', allIDs);
 
     const allIPFSLinks = [];
@@ -60,7 +62,7 @@ export class StudentService {
     const { error, data } = await supabase
       .from('gov_people')
       .select('*')
-      .textSearch('name', `'${name}'`);
+      .ilike('name', `%${name}%`);
 
     if (error) {
       throw new Error(error.message);
@@ -74,8 +76,11 @@ export class StudentService {
 
     for (const person of data) {
       const student = {
+        id: person.id,
         name: person.name,
         address: person.address,
+        email: person.email,
+        course: person.course,
       };
       students.push(student);
     }

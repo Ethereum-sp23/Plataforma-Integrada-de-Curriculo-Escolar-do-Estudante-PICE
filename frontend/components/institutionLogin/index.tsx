@@ -5,6 +5,8 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../input";
+import { toast } from "react-toastify";
+import { axios } from "@/config/axios";
 
 const schema = yup.object({
     email: yup.string().required("Esse campo é obrigatório."),
@@ -32,9 +34,15 @@ const InstitutionLogin = ({ setShowModal, showModal }: InstitutionLoginProps) =>
         resolver: yupResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data);
-        router.push("/institution");
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            const response = await axios.post("/school/login", data);
+            console.log(response);
+            toast.success("Login feito com sucesso");
+            router.push("/institution");
+        } catch (error: any) {
+            toast.error(error.response.data.message);
+        }
     };
 
     const closeModal = () => {
