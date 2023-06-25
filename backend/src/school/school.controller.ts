@@ -9,6 +9,11 @@ import {
 } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { CreateNFTBody, LoginBodyDto } from './dto/school.dto';
+import { UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadedFile } from '@nestjs/common';
+import { createReadStream } from 'fs';
+import { Readable } from 'stream';
 
 interface Response {
   message: string;
@@ -32,15 +37,20 @@ export class SchoolController {
   }
 
   @Post('/createNFT')
-  async createNFT(@Body() body: CreateNFTBody): Promise<Response> {
-    try {
-      const res = await this.SchoolService.mintNFT(body);
+  @UseInterceptors(FileInterceptor('file'))
+  async createNFT(@UploadedFile() file, @Body() body: CreateNFTBody): Promise<Response> {
+    // try {
+      const newFile = new Readable();
+      newFile.push(file.buffer);
+      newFile.push(null);
+
+      const res = await this.SchoolService.mintNFT(body, newFile);
       return {
         message: res,
       };
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    }
+    // } catch (error) {
+    //   throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    // }
   }
 
   @Get('/getSchoolNFTsByAddress/:address')
