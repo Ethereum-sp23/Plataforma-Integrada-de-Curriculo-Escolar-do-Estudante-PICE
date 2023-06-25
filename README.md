@@ -155,3 +155,47 @@ No backend, o dAppKit também desempenhou um papel crucial, pois ao estabelecer 
 Em resumo, as tecnologias RocketKit e dAppKit foram fundamentais para o desenvolvimento e integração do projeto. Elas contribuíram para uma estilização uniforme no frontend, através do RocketKit, e para uma interação simplificada com a blockchain, tanto no frontend quanto no backend, através do dAppKit. Essas tecnologias proporcionaram uma experiência de usuário aprimorada, maior segurança nas transações e eficiência no desenvolvimento, agregando valor ao projeto como um todo.
 
 ## Estrutura de Pastas
+
+O projeto é organizado da seguinte forma:
+
+### Backend
+
+* `src`
+  * `government` (API e rotas do Governo)
+  * `school` (rotas das instituições)
+  * `student` (rotas dos estudantes)
+  * `utils` (utilização do dAppKit no backend)
+
+### Blockchain
+
+* `build` (ABIs dos contratos inteligentes utilizados)
+* `contracts` (smart contract com todas as funções)
+* `migrations` (deploy do contrato na testnet Sepolia)
+
+### Frontend
+
+* `app`
+  * `government` (páginas do Governo)
+  * `institution` (páginas da Instituição)
+  * `student` (página do estudante)
+* `components` (componentes utilizados para a construção do frontend)
+* `public` (landing page)
+* `utils` (utilização das funções do dAppKit e da ABI do contrato)
+
+Essa estrutura de pastas ajuda a organizar e separar de forma clara as diferentes partes do projeto, facilitando o desenvolvimento, manutenção e colaboração no código.
+
+## Instalação
+
+Para instalar o projeto, siga os seguintes passos:
+
+1. Clone o repositório:
+2. Diriga-se a pasta frontend:
+   `cd frontend/app`
+3. Execute `pnpm i` para instalar todas as dependências necessárias
+4. Execute `pnpm run dev` para executar o módulo de frontend
+5. Saia e dirija-se a pasta backend:
+   `cd backend/src`
+6. Execute `pnpm i` para instalar todas as dependências necessárias
+7. Execute `pnpm start` para executar o módulo de backend
+
+## Como usar o projeto?
