@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 // import abiJson from './Abi.json';
 import { DappKitFunctions } from '../utils/dappKitFunctions';
@@ -11,11 +12,21 @@ export class StudentService {
     // pegar o array de todos os IDs dos NFTs de um usuario com base no endereço do usuario
     const contract = new DappKitFunctions();
 
+    const { data, error } = await supabase
+      .from('gov_people')
+      .select('*')
+      .eq('address', address);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
     console.log(
       'fazendo transação para pegar todos os IDs dos NFTs do usuario ',
       address,
     );
-    const allIDs = await contract.adminGetTransaction('seeOwnedNFTs', [
+    
+    const allIDs = await contract.userGetTransaction(data[0].private_key, 'seeOwnedNFTs', [
       address,
     ]);
     console.log('IDS: ', allIDs);
@@ -24,7 +35,9 @@ export class StudentService {
     for (let item in allIDs) {
       // para cada ID, pegar o link do IPFS
       console.log('adicionando o link do IPFS do NFT de ID ', item);
-      const retrievedIPFSLink = await contract.adminGetTransaction(
+
+      const retrievedIPFSLink = await contract.userGetTransaction(
+        data[0].private_key,
         'getIPFSByID',
         [item],
       );
