@@ -1,5 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
+
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 import { SchoolModule } from './school/school.module';
 import { GovernmentModule } from './government/gov.module';
@@ -26,4 +28,10 @@ import { StudentModule } from './student/student.module';
     ]),
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes('student', 'government', 'school');
+  }
+}

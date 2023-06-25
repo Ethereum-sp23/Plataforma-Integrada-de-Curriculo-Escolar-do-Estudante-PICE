@@ -23,17 +23,16 @@ export class SchoolService {
     { metadata, studentAddress, schoolAuth },
     file,
   ): Promise<string> {
+    let desiredAuthMethod = '';
+    if (schoolAuth.includes('@') && !schoolAuth.includes('0x'))
+      desiredAuthMethod = 'email';
+    else desiredAuthMethod = 'address';
 
-    let desiredAuthMethod = ""
-    if (schoolAuth.includes('@') && !schoolAuth.includes('0x')) desiredAuthMethod = 'email'
-    else desiredAuthMethod = 'address'
-
-    console.log("----------", desiredAuthMethod)
+    console.log('----------', desiredAuthMethod);
     const { data, error } = await supabase
       .from('gov_schools')
       .select('*')
       .eq(desiredAuthMethod, schoolAuth);
-    
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
@@ -75,7 +74,7 @@ export class SchoolService {
 
     const contract = new DappKitFunctions();
 
-    console.log(data[0].private_key)
+    console.log(data[0].private_key);
     await contract.userSendTransaction(data[0].private_key, 'issueNFT', [
       studentAddress,
       finalIPFSLink,

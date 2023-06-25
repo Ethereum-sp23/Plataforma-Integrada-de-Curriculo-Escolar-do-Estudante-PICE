@@ -61,4 +61,17 @@ export class GovernmentController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @Get('/all')
+  async getAll(): Promise<Response> {
+    try {
+      const res = await this.GovernmentService.getAll();
+      return {
+        message: 'All schools get!',
+        data: res,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

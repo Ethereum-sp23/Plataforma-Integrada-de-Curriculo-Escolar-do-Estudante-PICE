@@ -47,17 +47,17 @@ export class SchoolController {
     @Body() body: CreateNFTBody,
   ): Promise<Response> {
     try {
-    const newFile = new Readable();
-    newFile.push(file.buffer);
-    newFile.push(null);
+      const newFile = new Readable();
+      newFile.push(file.buffer);
+      newFile.push(null);
 
-    const res = await this.SchoolService.mintNFT(body, newFile);
-    return {
-      message: res,
-    };
-     } catch (error) {
-       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-     }
+      const res = await this.SchoolService.mintNFT(body, newFile);
+      return {
+        message: res,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Get('/getSchoolNFTsByAddress/:address')

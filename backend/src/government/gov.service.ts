@@ -3,7 +3,7 @@ import { supabase } from 'src/main';
 import { CreatePersonBody, CreateSchoolBody } from './dto/government.dto';
 import Web3 from 'web3';
 import { DappKitFunctions } from '../utils/dappKitFunctions';
-import { CreateAccountResponse } from './dto/government.dto';
+import { CreateAccountResponse, Response } from './dto/government.dto';
 import bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -95,6 +95,43 @@ export class GovernmentService {
     await contract.adminSendTransaction('deleteStudent', [data[0].address]);
 
     return 'Student deleted successfully!';
+  }
+
+  async getAll(): Promise<Response> {
+    const { data: schools, error: schoolsError } = await supabase
+      .from('gov_schools')
+      .select('id, name, address, email');
+
+    const { data: people, error: peopleError } = await supabase
+      .from('gov_people')
+      .select('id, name, address, email, course');
+
+    if (schoolsError || peopleError) {
+      throw new Error(schoolsError.message || peopleError.message);
+    }
+
+    if (!schools.length && !people.length) {
+      throw new Error('No data found!');
+    }
+
+    if (!schools.length) {
+      return {
+        message: 'Everyone in your hands...',
+        data: people,
+      };
+    }
+
+    if (!people.length) {
+      return {
+        message: 'Everyone in your hands...',
+        data: schools,
+      };
+    }
+
+    return {
+      message: 'Everyone in your hands...',
+      data: [...schools, ...people],
+    };
   }
 
   // async deleteSchool(email: string): Promise<string> {
