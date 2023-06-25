@@ -1,1 +1,1 @@
-web: cd backend && npm run echo && npm run start:prod
+web: node backend/dist/main
