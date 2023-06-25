@@ -1,1 +1,1 @@
-web: cd backend && node dist/main
+web: cd backend && pnpm run start:prod

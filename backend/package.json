@@ -9,6 +9,7 @@
     "node": "19.9.0"
   },
   "scripts": {
+    "echo": "echo HelloWorld!",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
