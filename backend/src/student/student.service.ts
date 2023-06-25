@@ -2,10 +2,8 @@ import { Injectable } from '@nestjs/common';
 import abiJson from './Abi.json';
 import { DappKitFunctions } from '../utils/dappKitFunctions';
 import { supabase } from 'src/main';
+import { ResponseGetStudents } from './dto/student.dto';
 
-interface ResponseGetStudents {
-  data: any[];
-}
 @Injectable()
 export class StudentService {
   async getAllNfts({ address }): Promise<any> {

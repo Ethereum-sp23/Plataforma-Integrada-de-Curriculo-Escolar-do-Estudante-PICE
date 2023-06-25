@@ -1,16 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { supabase } from 'src/main';
-import { CreatePersonBody, CreateSchoolBody } from './gov.controller';
+import { CreatePersonBody, CreateSchoolBody } from './dto/government.dto';
 import Web3 from 'web3';
 import { DappKitFunctions } from '../utils/dappKitFunctions';
-
-interface CreateAccountResponse {
-  address: string;
-  privateKey: string;
-  signTransaction: Function;
-  sign: Function;
-  encrypt: Function;
-}
+import { CreateAccountResponse } from './dto/government.dto';
 
 @Injectable()
 export class GovernmentService {

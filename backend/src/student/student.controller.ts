@@ -1,15 +1,7 @@
 import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { Param } from '@nestjs/common';
-
-interface GetAllNfts {
-  address: string;
-}
-
-interface Response {
-  message: string;
-  data?: any;
-}
+import { GetAllNfts, Response } from './dto/student.dto';
 
 @Controller()
 export class StudentController {

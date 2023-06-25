@@ -9,32 +9,13 @@ import {
   Post,
 } from '@nestjs/common';
 import { GovernmentService } from './gov.service';
+import {
+  CreatePersonBody,
+  CreateSchoolBody,
+  GetNameByAddress,
+  Response,
+} from './dto/government.dto';
 
-interface GetNameByAddress {
-  address: string;
-}
-
-interface Response {
-  message: string;
-  data?: any;
-}
-
-export interface CreatePersonBody {
-  name: string;
-  email: string;
-  course: string;
-}
-
-export interface CreateSchoolBody {
-  name: string;
-  email: string;
-  password: string;
-}
-
-interface Response {
-  message: string;
-  data?: any;
-}
 @Controller()
 export class GovernmentController {
   constructor(private readonly GovernmentService: GovernmentService) {}
