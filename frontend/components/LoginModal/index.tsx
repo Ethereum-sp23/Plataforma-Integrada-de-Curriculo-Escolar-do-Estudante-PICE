@@ -66,6 +66,7 @@ const LoginModal = ({ setShowModal, redirect, showModal, loginEndpoint, onlyMeta
         try {
             if (onlyMetamask) {
                 const res = await instance.userGetTransaction("government");
+                // Doing the different operator to make the admin dashboard accessible for everyone
                 if (res != addrs) {
                     toast.success("Login feito com sucesso");
                     router.push(redirect);
