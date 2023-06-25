@@ -1,5 +1,5 @@
 export interface GetAllNfts {
-  address: string;
+  id: string;
 }
 
 export interface Response {

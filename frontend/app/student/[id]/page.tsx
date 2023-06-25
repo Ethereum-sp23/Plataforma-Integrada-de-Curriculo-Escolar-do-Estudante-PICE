@@ -11,12 +11,14 @@ import { LoadingState } from "@taikai/rocket-kit";
 import { toast } from "react-toastify";
 import { axios } from "@/config/axios";
 
-const Student = ({ params }: { params: { wallet: string } }) => {
+const Student = ({ params }: { params: { id: string } }) => {
     const [loading, setLoading] = React.useState(true);
+    const [student, setStudent] = React.useState(null);
 
     const getInfo = async () => {
         try {
-            axios.get('/students/')
+            const res = await axios.get("/student/getStudentById/" + params.id);
+            setStudent(res.data.data);
         } catch (error) {
             console.log(error);
             toast.error("Erro ao carregar dados do estudante");
@@ -30,7 +32,7 @@ const Student = ({ params }: { params: { wallet: string } }) => {
 
     return (
         <div className="bg-gray-300 h-full pb-4 min-h-[100vh]">
-            <StudentHeader />
+            <StudentHeader student={student} loading={loading} />
             <Card classes="m-6" title="Histórico de atividades">
                 {!loading ? (
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

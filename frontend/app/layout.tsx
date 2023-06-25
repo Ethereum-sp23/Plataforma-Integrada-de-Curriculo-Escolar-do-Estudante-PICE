@@ -1,4 +1,4 @@
-import AuthProvider from "@/contexts/metamask";
+import AuthProvider from "@/contexts/auth";
 import "../styles/globals.css";
 import { Montserrat } from "next/font/google";
 import { ToastContainer } from "react-toastify";
