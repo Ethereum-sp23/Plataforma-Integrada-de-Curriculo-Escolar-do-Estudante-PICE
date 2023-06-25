@@ -3,9 +3,10 @@ import { supabase } from 'src/main';
 import { DappKitFunctions } from 'src/utils/dappKitFunctions';
 import PinataClient from '@pinata/sdk';
 import bcrypt from 'bcryptjs';
-import { LoginBodyDto } from './dto/school.dto';
-import { Response } from './dto/school.dto';
+import { CreateAccountResponse, LoginBodyDto } from './dto/school.dto';
+import { Response, CreatePersonBody } from './dto/school.dto';
 import axios from 'axios';
+import Web3 from 'web3';
 // interface CreateNFTBody {}
 @Injectable()
 export class SchoolService {
@@ -157,5 +158,52 @@ export class SchoolService {
     }
 
     return { message: 'All students get!', data: studentsWithStatus };
+  }
+
+  async createPerson(
+    schoolAccount: string,
+    body: CreatePersonBody,
+  ): Promise<string> {
+    if (!schoolAccount.startsWith('0x')) {
+      const { data, error } = await supabase
+        .from('gov_schools')
+        .select('*')
+        .eq('email', schoolAccount);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      schoolAccount = data[0].address;
+    }
+
+    const web3: Web3 = new Web3(
+      `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}}`,
+    );
+    const { address, privateKey }: CreateAccountResponse =
+      web3.eth.accounts.create();
+
+    const contract = new DappKitFunctions();
+
+    await contract.adminSendTransaction('createStudent', [
+      address,
+      schoolAccount,
+    ]);
+
+    const { error } = await supabase.from('gov_people').insert([
+      {
+        name: body.name,
+        email: body.email,
+        course: body.course,
+        address: address,
+        private_key: privateKey,
+      },
+    ]);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return 'Person created successfully!';
   }
 }

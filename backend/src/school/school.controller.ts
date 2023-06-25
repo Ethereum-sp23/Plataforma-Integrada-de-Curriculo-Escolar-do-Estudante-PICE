@@ -8,7 +8,11 @@ import {
   Param,
 } from '@nestjs/common';
 import { SchoolService } from './school.service';
-import { CreateNFTBody, LoginBodyDto } from './dto/school.dto';
+import {
+  CreateNFTBody,
+  LoginBodyDto,
+  CreatePersonBody,
+} from './dto/school.dto';
 import { UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadedFile } from '@nestjs/common';
@@ -73,6 +77,25 @@ export class SchoolController {
       return {
         message: typeof res === 'string' ? res : 'Students found!',
         data: typeof res === 'string' ? null : res.data,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Post('createPerson/:schoolAccount')
+  async createPerson(
+    @Param() { schoolAccount },
+    @Body() body: CreatePersonBody,
+  ): Promise<Response> {
+    try {
+      console.log(body);
+      const response = await this.SchoolService.createPerson(
+        schoolAccount,
+        body,
+      );
+      return {
+        message: response,
       };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
