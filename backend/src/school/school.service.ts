@@ -39,13 +39,12 @@ export class SchoolService {
     }
     //--------------------------------------------------------------------------------------
 
-    if (!image) {
+    if (!file) {
       throw new HttpException(
         'Please select an image to upload',
         HttpStatus.BAD_REQUEST,
       );
     }
-
 
     const imageFormData = new FormData();
     imageFormData.append('file', file);
