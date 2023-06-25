@@ -202,7 +202,7 @@ Para instalar o projeto, siga os seguintes passos:
 7. Execute `pnpm start` para executar o módulo de backend
 
 ## Como usar o projeto?
-
+Acesse o dApp: https://frontend-sigma-nine-23.vercel.app/
 ## Nosso time
 
 <table>
