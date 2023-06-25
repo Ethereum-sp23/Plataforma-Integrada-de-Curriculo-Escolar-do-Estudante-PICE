@@ -126,11 +126,11 @@ O objetivo principal de um diagrama de blocos é visualizar de forma clara e con
 
 ![1687658514257](image/README/1687658514257.png)
 
-No diagrama de blocos acima existem dois atores principais que interagem com o sistema: aluno e instituição de ensino. Esses atores interagem com o sistema através da interface frontend. Para o aluno, basta pesquisar seu nome e todo seu currículo aparece para visualização. Para a instituição, após o cadastro do Governo no sistema através da API, com sua carteira, é necessário realizar o login, visto que, para criar NFTs das atividades dos alunos, é necessário assinar as transações.
+No diagrama de blocos acima existem dois atores principais que interagem com o sistema: aluno e instituição de ensino. Os dois atores só conseguem interagir com o sistema após o prévio cadastro do Governo, através da API, que adiciona uma nova instituição, criando uma carteira e um login, e um novo estudante, criano uma carteira que, posteriormente, recebe NFTs atrelados à ela. Esses atores interagem com o sistema através da interface frontend. Para o aluno, basta pesquisar seu nome e todo seu currículo aparece para visualização. Para a instituição, após o cadastro, com sua carteira ou login, pode acessar o sistema e gerenciar as NFTs e os alunos.
 
 No Backend, as informações dos alunos, assim como das instituições, são salvas e somente acessadas pelo Governo. Esse bloco simula o Sistema Educacional Brasileiro (SEB), um cadastro contínuo, preenchido e atualizado pelas intituições de educação que reúne dados do corpo docente e discente e que permite o compartilhamento
 
-Por fim, o bloco blockchain consiste num contrato, em que é possível cadastrar uma nova instituição de ensino, criar, consultar e excluir um estudante, emitir, consultar e destruir um NFT e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
+Por fim, o bloco blockchain consiste num contrato, em que o Governo pode cadastrar uma nova instituição de ensino ou um novo estudante. O Governo também é responsável por atrelar os estudantes às suas respectivas instituições. A partir disso, elas têm poder de consultar e excluir um estudante e emitir, consultar e destruir um NFT de cada estudante, ou seja, suas atividades acadêmicas e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
 
 ## Arquitetura da solução
 
