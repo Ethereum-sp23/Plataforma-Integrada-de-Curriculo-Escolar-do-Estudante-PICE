@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../input";
 import { toast } from "react-toastify";
 import { axios } from "@/config/axios";
-import { useAuth } from "@/contexts/metamask";
+import { useAuth } from "@/contexts/auth";
 import { DappKitFunctions } from "@/utils/dappKitFunctions";
 import { on } from "events";
 
@@ -47,6 +47,7 @@ const LoginModal = ({ setShowModal, redirect, showModal, loginEndpoint, onlyMeta
 
             const response = await axios.post(loginEndpoint, data);
             setAccount(data.email)
+            localStorage.setItem("account", data.email);
             toast.success("Login feito com sucesso");
             router.push(redirect);
         } catch (error: any) {

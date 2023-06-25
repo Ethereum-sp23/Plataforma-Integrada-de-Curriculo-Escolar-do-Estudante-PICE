@@ -31,6 +31,7 @@ const CreateInstitution = () => {
 
     return (
         <Card title="Cadastrar uma instituição" classes="grow">
+            <p >A ação de criar uma instituição pode demorar. O sistema está criando uma carteira na blockchain e atrelando-a a uma instituição de ensino.</p>
             {!loading ? (
                 <form className="flex flex-col gap-4 m-8" onSubmit={handleSubmit(onSubmit)}>
                     <Input control={control} name="name" errors={errors} placeholder="Digite um nome..." />

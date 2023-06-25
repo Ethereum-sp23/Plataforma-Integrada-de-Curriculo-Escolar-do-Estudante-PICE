@@ -8,29 +8,28 @@ import { ResponseGetStudents } from './dto/student.dto';
 
 @Injectable()
 export class StudentService {
-  async getAllNfts({ address }): Promise<any> {
+  async getAllNfts({ id }): Promise<any> {
     // pegar o array de todos os IDs dos NFTs de um usuario com base no endereço do usuario
     const contract = new DappKitFunctions();
 
     const { data, error } = await supabase
       .from('gov_people')
       .select('*')
-      .eq('address', address);
+      .eq('id', id);
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-
     }
 
     console.log(
       'fazendo transação para pegar todos os IDs dos NFTs do usuario ',
-      address,
+      data[0].address,
     );
 
     const allIDs = await contract.userGetTransaction(
       data[0].private_key,
       'seeOwnedNFTs',
-      [address],
+      [data[0].address],
     );
     console.log('IDS: ', allIDs);
 
@@ -67,7 +66,6 @@ export class StudentService {
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-
     }
 
     if (data.length === 0) {
@@ -88,5 +86,30 @@ export class StudentService {
     }
 
     return { data: students };
+  }
+
+  async getStudentById(id: string) {
+    const { error, data } = await supabase
+      .from('gov_people')
+      .select('*')
+      .eq('id', id);
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+
+    if (data.length === 0) {
+      return 'No student found with this id!';
+    }
+
+    const student = {
+      id: data[0].id,
+      name: data[0].name,
+      address: data[0].address,
+      email: data[0].email,
+      course: data[0].course,
+    };
+
+    return { data: student };
   }
 }

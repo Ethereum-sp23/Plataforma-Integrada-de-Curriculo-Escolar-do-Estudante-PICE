@@ -31,6 +31,10 @@ const CreateStudent = () => {
 
     return (
         <Card title="Cadastrar um estudante" classes="grow">
+            <p>
+                A ação de criar um estudante pode demorar. O sistema está criando uma carteira na blockchain e
+                atrelando-a ao recém criado estudante.
+            </p>
             {!loading ? (
                 <form className="flex flex-col gap-4 m-8" onSubmit={handleSubmit(onSubmit)}>
                     <Input control={control} name="name" errors={errors} placeholder="Digite um nome..." />

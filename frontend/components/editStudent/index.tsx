@@ -7,7 +7,7 @@ import * as yup from "yup";
 import Input from "../input";
 import { Button, FilePicker } from "@taikai/rocket-kit";
 import { toast } from "react-toastify";
-import { useAuth } from "@/contexts/metamask";
+import { useAuth } from "@/contexts/auth";
 import { axios } from "@/config/axios";
 
 interface EditStudentProps {

@@ -1,63 +1,46 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import Card from "@/components/card";
 import Badge, { BadgeType } from "@/components/badge";
 import ActionItem from "@/components/actionItem";
+import { toast } from "react-toastify";
+import { axios } from "@/config/axios";
+import { useAuth } from "@/contexts/auth";
 
 type Student = {
-    wallet: string;
+    id: string
+    address: string;
     name: string;
     status: boolean;
     course: string;
 };
 
-const data: Student[] = [
-    {
-        name: "John",
-        wallet: "0x123",
-        status: true,
-        course: "Engenharia de Software",
-    },
-    {
-        name: "John",
-        wallet: "0x123",
-        status: true,
-        course: "Engenharia de Software",
-    },
-    {
-        name: "John",
-        wallet: "0x123",
-        status: true,
-        course: "Engenharia de Software",
-    },
-    {
-        name: "John",
-        wallet: "0x123",
-        status: false,
-        course: "Engenharia de Software",
-    },
-    {
-        name: "John",
-        wallet: "0x123",
-        status: false,
-        course: "Engenharia de Software",
-    },
-    {
-        name: "John",
-        wallet: "0x123",
-        status: false,
-        course: "Engenharia de Software",
-    },
-];
-
 const Institution = () => {
+    const [tableData, setTableData] = React.useState<Student[]>([]);
+    
+    const getTableData = async () => {
+        try {
+            const account = localStorage.getItem("account")
+            const res = await axios.get("/school/getStudents/" + account)
+            console.log(res)
+        } catch (error) {
+            console.log(error);
+            toast.error("Erro ao carregar dados da tabela");
+        }
+    }
+
+    useEffect(() => {
+        getTableData();
+    }, [])
+
+
     //should be memoized or stable
     const columns = useMemo<MRT_ColumnDef<Student>[]>(
         () => [
             {
-                accessorKey: "wallet",
+                accessorKey: "address",
                 header: "Carteira",
                 size: 150,
             },
@@ -85,6 +68,8 @@ const Institution = () => {
         []
     );
 
+
+
     const actionItems = (wallet: string) => {
         return [
             <ActionItem key={1} icon="visibility" label="Ver informações" link={"/student/" + wallet} />,
@@ -93,14 +78,20 @@ const Institution = () => {
     };
 
     return (
-        <Card classes="min-h-[calc(100vh-4rem)] md:m-10 md:px-10 !rounded-none p-10" titleLg title="Estudantes da instituição">
-            <MaterialReactTable
+        <Card
+            classes="min-h-[calc(100vh-4rem)] md:m-10 md:px-10 !rounded-none p-10"
+            titleLg
+            title="Estudantes da instituição"
+        >
+            {/* <MaterialReactTable
                 columns={columns}
                 data={data}
                 enableRowActions
                 positionActionsColumn="last"
-                renderRowActionMenuItems={({ row }) => actionItems(row._valuesCache.address)}
-            />
+                renderRowActionMenuItems={(props) => {
+                    return actionItems(props.row.getValue("id"));
+                }}
+            /> */}
         </Card>
     );
 };

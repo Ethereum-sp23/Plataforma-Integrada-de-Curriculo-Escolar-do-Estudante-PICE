@@ -8,7 +8,7 @@ export class DappKitFunctions {
     private abi: any;
     private contractAddress: string;
 
-    constructor(abiJSON = standartABI, contractAddress = '0x3D695B0F21D35cb1194C96d41E14A7634B849509') {
+    constructor(abiJSON = standartABI, contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ) {
         this.abi = abiJSON.abi;
         this.contractAddress = contractAddress as string;
     }

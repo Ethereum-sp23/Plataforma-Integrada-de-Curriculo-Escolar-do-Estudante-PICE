@@ -44,6 +44,8 @@ export default function AuthProvider({ children }: any) {
                 await web3Connection.connect();
                 const addrs = await web3Connection.getAddress();
                 setAccount(addrs);
+                localStorage.setItem("account", addrs);
+                
                 console.log("Metamask conectada com sucesso! Wallet address: ", account);
                 return addrs;
             } catch (error) {
