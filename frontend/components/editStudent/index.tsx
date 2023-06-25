@@ -12,6 +12,7 @@ import { axios } from "@/config/axios";
 
 interface EditStudentProps {
     params: { id: string };
+    params: { id: string };
 }
 
 const schema = yup.object({
@@ -51,7 +52,7 @@ const EditStudent = ({ params }: EditStudentProps) => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-
+        toast.success("Atividade criada com sucesso.")
             console.log(res);
         } catch (error) {
             console.log(error);

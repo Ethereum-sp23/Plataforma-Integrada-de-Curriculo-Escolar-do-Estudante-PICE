@@ -1,8 +1,11 @@
 # Plataforma Integrada de Currículo Escolar do Estudante (PICE)
 
-![1687646925848](image/README/1687646925848.png)
+<div align="center">
+   <img src="image/README/1687646925848.png" alt="Minha Figura">
+</div>
+<br>
 
-A PICE é uma plataforma de registro acadêmico baseada em blockchain que capacita os estudantes, permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para uma educação de qualidade e, assim, atingir a ODS 4 da ONU - Educação de Qualidade.
+A PICE é uma plataforma de registro acadêmico baseada em blockchain que empodera os estudantes, permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para uma educação de qualidade e, assim, atingir a ODS 4 da ONU - Educação de Qualidade.
 
 ## Cenário
 
@@ -20,7 +23,7 @@ Todos esses componentes constituem a esfera educacional brasileira e, principalm
 
 ## Definição  do Problema
 
-É importante ressaltar que existem desafios a serem enfrentados no sistema educacional brasileiro, como a desigualdade de acesso, a qualidade desigual entre as escolas, a formação e valorização dos professores e a falta de recursos adequados. No entanto, o Brasil tem implementado iniciativas e políticas visando a melhoria da educação e o aumento da equidade no acesso ao conhecimento. Dentre os problemas, os seguintes podem ser citados:
+É importante ressaltar que existem desafios a serem enfrentados no sistema educacional brasileiro, como a desigualdade de acesso, a qualidade desigual entre as escolas, a falta de valorização dos professores e a falta de recursos adequados. No entanto, o Brasil tem implementado iniciativas e políticas visando a melhoria da educação e o aumento da equidade no acesso ao conhecimento. Dentre os problemas, os seguintes podem ser citados:
 
 1. Falta de documentação adequada: Muitas vezes, os estudantes enfrentam dificuldades para documentar e comprovar suas conquistas acadêmicas, como prêmios, participação em projetos ou atividades extracurriculares.
 2. Dificuldades na transferência de informações: Quando os estudantes mudam de escola ou se matriculam em uma nova instituição, pode haver uma perda de informações sobre seu histórico acadêmico.
@@ -126,11 +129,11 @@ O objetivo principal de um diagrama de blocos é visualizar de forma clara e con
 
 ![1687658514257](image/README/1687658514257.png)
 
-No diagrama de blocos acima existem dois atores principais que interagem com o sistema: aluno e instituição de ensino. Esses atores interagem com o sistema através da interface frontend. Para o aluno, basta pesquisar seu nome e todo seu currículo aparece para visualização. Para a instituição, após o cadastro do Governo no sistema através da API, com sua carteira, é necessário realizar o login, visto que, para criar NFTs das atividades dos alunos, é necessário assinar as transações.
+No diagrama de blocos acima existem dois atores principais que interagem com o sistema: aluno e instituição de ensino. Os dois atores só conseguem interagir com o sistema após o prévio cadastro do Governo, através da API, que adiciona uma nova instituição, criando uma carteira e um login, e um novo estudante, criano uma carteira que, posteriormente, recebe NFTs atrelados à ela. Esses atores interagem com o sistema através da interface frontend. Para o aluno, basta pesquisar seu nome e todo seu currículo aparece para visualização. Para a instituição, após o cadastro, com sua carteira ou login, pode acessar o sistema e gerenciar as NFTs e os alunos.
 
 No Backend, as informações dos alunos, assim como das instituições, são salvas e somente acessadas pelo Governo. Esse bloco simula o Sistema Educacional Brasileiro (SEB), um cadastro contínuo, preenchido e atualizado pelas intituições de educação que reúne dados do corpo docente e discente e que permite o compartilhamento
 
-Por fim, o bloco blockchain consiste num contrato, em que é possível cadastrar uma nova instituição de ensino, criar, consultar e excluir um estudante, emitir, consultar e destruir um NFT e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
+Por fim, o bloco blockchain consiste num contrato, em que o Governo pode cadastrar uma nova instituição de ensino ou um novo estudante. O Governo também é responsável por atrelar os estudantes às suas respectivas instituições. A partir disso, elas têm poder de consultar e excluir um estudante e emitir, consultar e destruir um NFT de cada estudante, ou seja, suas atividades acadêmicas e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
 
 ## Arquitetura da solução
 
@@ -155,3 +158,47 @@ No backend, o dAppKit também desempenhou um papel crucial, pois ao estabelecer 
 Em resumo, as tecnologias RocketKit e dAppKit foram fundamentais para o desenvolvimento e integração do projeto. Elas contribuíram para uma estilização uniforme no frontend, através do RocketKit, e para uma interação simplificada com a blockchain, tanto no frontend quanto no backend, através do dAppKit. Essas tecnologias proporcionaram uma experiência de usuário aprimorada, maior segurança nas transações e eficiência no desenvolvimento, agregando valor ao projeto como um todo.
 
 ## Estrutura de Pastas
+
+O projeto é organizado da seguinte forma:
+
+### Backend
+
+* `src`
+  * `government` (API e rotas do Governo)
+  * `school` (rotas das instituições)
+  * `student` (rotas dos estudantes)
+  * `utils` (utilização do dAppKit no backend)
+
+### Blockchain
+
+* `build` (ABIs dos contratos inteligentes utilizados)
+* `contracts` (smart contract com todas as funções)
+* `migrations` (deploy do contrato na testnet Sepolia)
+
+### Frontend
+
+* `app`
+  * `government` (páginas do Governo)
+  * `institution` (páginas da Instituição)
+  * `student` (página do estudante)
+* `components` (componentes utilizados para a construção do frontend)
+* `public` (landing page)
+* `utils` (utilização das funções do dAppKit e da ABI do contrato)
+
+Essa estrutura de pastas ajuda a organizar e separar de forma clara as diferentes partes do projeto, facilitando o desenvolvimento, manutenção e colaboração no código.
+
+## Instalação
+
+Para instalar o projeto, siga os seguintes passos:
+
+1. Clone o repositório:
+2. Diriga-se a pasta frontend:
+   `cd frontend/app`
+3. Execute `pnpm i` para instalar todas as dependências necessárias
+4. Execute `pnpm run dev` para executar o módulo de frontend
+5. Saia e dirija-se a pasta backend:
+   `cd backend/src`
+6. Execute `pnpm i` para instalar todas as dependências necessárias
+7. Execute `pnpm start` para executar o módulo de backend
+
+## Como usar o projeto?
