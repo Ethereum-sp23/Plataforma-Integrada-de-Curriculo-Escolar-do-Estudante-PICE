@@ -35,7 +35,7 @@ export class StudentService {
     console.log('IDS: ', allIDs);
 
     const allIPFSLinks = [];
-    for (const item in allIDs) {
+    for (const item of allIDs) {
       // para cada ID, pegar o link do IPFS
       console.log('adicionando o link do IPFS do NFT de ID ', item);
 
@@ -50,7 +50,7 @@ export class StudentService {
 
     const allNftsResponse = [];
 
-    for (const link in allIPFSLinks) {
+    for (const link of allIPFSLinks) {
       console.log('pegando dados do link ', link);
       const res = await axios.get(link);
       allNftsResponse.push(res.data);
