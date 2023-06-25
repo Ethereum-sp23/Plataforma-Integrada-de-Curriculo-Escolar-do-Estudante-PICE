@@ -17,7 +17,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "heroku-postbuild": "pnpm run build"
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
