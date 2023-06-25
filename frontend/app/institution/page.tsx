@@ -93,7 +93,7 @@ const Institution = () => {
     };
 
     return (
-        <Card classes="m-10 px-10" titleLg title="Estudantes da instituição">
+        <Card classes="min-h-[calc(100vh-4rem)] md:m-10 md:px-10 !rounded-none p-10" titleLg title="Estudantes da instituição">
             <MaterialReactTable
                 columns={columns}
                 data={data}

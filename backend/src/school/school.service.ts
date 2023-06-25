@@ -118,13 +118,13 @@ export class SchoolService {
     }
 
     if (data.length === 0) {
-      throw new Error('Não foi possivel entrar');
+      throw new Error('Não foi possível entrar');
     }
 
     const isMatch = await bcrypt.compare(body.password, data[0].password);
 
     if (!isMatch) {
-      throw new Error('Não foi possivel entrar');
+      throw new Error('Não foi possível entrar');
     }
 
     return 'Usuário logado com sucesso!';
@@ -160,7 +160,7 @@ export class SchoolService {
 
     const studentsWithStatus = [];
 
-    for (let student of students) {
+    for (const student of students) {
       const studentData = await contract.adminGetTransaction(
         'allowedSchoolsStatus',
         [student.address, data[0].address],

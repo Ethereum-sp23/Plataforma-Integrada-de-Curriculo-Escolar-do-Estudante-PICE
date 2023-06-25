@@ -5,12 +5,11 @@ import Link from "next/link";
 import { Button, ModalDrawer, ModalFooter } from "@taikai/rocket-kit";
 import { useMetamask } from "@/contexts/metamask";
 import { useRouter } from "next/navigation";
-import InstitutionLogin from "../institutionLogin";
+import LoginModal from "../LoginModal";
 
 const HomeSection = () => {
-    const { connectMetamask } = useMetamask();
-    const router = useRouter();
-    const [showModal, setShowModal] = React.useState(false);
+    const [showInstitutionModal, setInstitutionShowModal] = React.useState(false);
+    const [showGovernmentModal, setGovernmentShowModal] = React.useState(false);
 
     return (
         <LandingContainer>
@@ -51,11 +50,36 @@ const HomeSection = () => {
                     txtColor="white"
                     value="Entrar como instituição de ensino"
                     variant="outline"
-                    action={() => setShowModal(true)}
+                    action={() => setInstitutionShowModal(true)}
                 />
             </div>
 
-            <InstitutionLogin setShowModal={setShowModal} showModal={showModal} />
+            <div className="absolute left-[50%] translate-x-[-50%] top-24 lg:left-auto lg:translate-x-0 lg:right-6">
+                <Button
+                    ariaLabel="Government Button"
+                    className="button hover:scale-105 transition"
+                    color="white"
+                    icon="lock"
+                    iconPosition="right"
+                    txtColor="white"
+                    value="Entrar como governo"
+                    variant="outline"
+                    action={() => setGovernmentShowModal(true)}
+                />
+            </div>
+
+            <LoginModal
+                loginEndpoint="/school/login"
+                redirect="/institution"
+                setShowModal={setInstitutionShowModal}
+                showModal={showInstitutionModal}
+            />
+            <LoginModal
+                redirect="/government"
+                setShowModal={setGovernmentShowModal}
+                showModal={showGovernmentModal}
+                onlyMetamask
+            />
         </LandingContainer>
     );
 };

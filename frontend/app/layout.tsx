@@ -19,7 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={montserrat.className}>
                 <MetamaskProvider>
                     {children}
-
                     <ToastContainer />
                 </MetamaskProvider>
             </body>

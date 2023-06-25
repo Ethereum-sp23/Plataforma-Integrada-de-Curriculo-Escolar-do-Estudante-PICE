@@ -59,6 +59,8 @@ export class GovernmentService {
       },
     ]);
 
+    await contract.adminSendTransaction('createSchool', [account.address]);
+
     if (error) {
       throw new Error(error.message);
     }
