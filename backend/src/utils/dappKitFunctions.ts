@@ -1,14 +1,17 @@
 import { Model, Web3Connection } from '@taikai/dappkit';
 import { TransactionReceipt } from '@taikai/dappkit/dist/src/interfaces/web3-core';
+import standartABI from './EducationSystem.json';
 
 export class DappKitFunctions {
   private abi: any;
   private contractAddress: string;
 
-  constructor(abiJSON: any, contractAddress: string) {
+  constructor(abiJSON?: any, contractAddress?: string) {
     const { abi } = JSON.parse(JSON.stringify(abiJSON));
-    this.abi = abi;
-    this.contractAddress = contractAddress;
+    this.abi = abiJSON ? abi : standartABI.abi;
+    this.contractAddress = contractAddress
+      ? contractAddress
+      : process.env.CONTRACT_ADDRESS;
   }
 
   async adminSendTransaction(

@@ -35,18 +35,6 @@ interface Response {
   message: string;
   data?: any;
 }
-
-export interface CreatePersonBody {
-  name: string;
-  email: string;
-  course: string;
-}
-
-export interface CreateSchoolBody {
-  name: string;
-  email: string;
-  password: string;
-}
 @Controller()
 export class GovernmentController {
   constructor(private readonly GovernmentService: GovernmentService) {}
@@ -82,8 +70,15 @@ export class GovernmentController {
     }
   }
 
-  @Get('test')
-  async test(): Promise<string> {
-    return 'Hello World!';
+  @Get('deleteStudent/:email')
+  async deleteStudent(@Param() { email }): Promise<Response> {
+    try {
+      const response = await this.GovernmentService.deleteStudent(email);
+      return {
+        message: response,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { supabase } from 'src/main';
 import { CreatePersonBody, CreateSchoolBody } from './gov.controller';
 import Web3 from 'web3';
+import { DappKitFunctions } from '../utils/dappKitFunctions';
 
 interface CreateAccountResponse {
   address: string;
@@ -50,6 +51,10 @@ export class GovernmentService {
     );
     const account: CreateAccountResponse = web3.eth.accounts.create();
 
+    const contract = new DappKitFunctions();
+
+    await contract.adminSendTransaction('createSchool', [account.address]);
+
     const { error } = await supabase.from('gov_schools').insert([
       {
         name: body.name,
@@ -66,4 +71,48 @@ export class GovernmentService {
 
     return 'School created successfully!';
   }
+
+  async deleteStudent(email: string): Promise<string> {
+    const { data, error: selectError } = await supabase
+      .from('gov_people')
+      .select('*')
+      .eq('email', email);
+
+    const { error: deleteError } = await supabase
+      .from('gov_people')
+      .delete()
+      .eq('email', email);
+
+    if (selectError || deleteError) {
+      throw new Error(selectError.message || deleteError.message);
+    }
+
+    const contract = new DappKitFunctions();
+
+    await contract.adminSendTransaction('deleteStudent', [data[0].address]);
+
+    return 'Student deleted successfully!';
+  }
+
+  // async deleteSchool(email: string): Promise<string> {
+  //   const { data, error: selectError } = await supabase
+  //     .from('gov_schools')
+  //     .select('*')
+  //     .eq('email', email);
+
+  //   const { error: deleteError } = await supabase
+  //     .from('gov_schools')
+  //     .delete()
+  //     .eq('email', email);
+
+  //   if (selectError || deleteError) {
+  //     throw new Error(selectError.message || deleteError.message);
+  //   }
+
+  //   const contract = new DappKitFunctions();
+
+  //   await contract.adminSendTransaction('deleteSchool', [data[0].address]);
+
+  //   return 'School deleted successfully!';
+  // }
 }

@@ -10,8 +10,13 @@ interface GetAllNfts {
 export class StudentController {
   constructor(private readonly StudentService: StudentService) {}
 
-  @Get("getAllNfts/:address")
+  @Get('getAllNfts/:address')
   async getAllNfts(@Param() params: GetAllNfts): Promise<string> {
     return this.StudentService.getAllNfts(params);
+  }
+
+  @Get('getStudent/:name')
+  async getStudent(@Param() { name }): Promise<string> {
+    return this.StudentService.getStudent(name);
   }
 }
