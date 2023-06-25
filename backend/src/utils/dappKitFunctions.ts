@@ -6,53 +6,62 @@ export class DappKitFunctions {
   private abi: any;
   private contractAddress: string;
 
-  constructor(abiJSON?: any, contractAddress?: string) {
-    const { abi } = JSON.parse(JSON.stringify(abiJSON));
-    this.abi = abiJSON ? abi : standartABI.abi;
-    this.contractAddress = contractAddress
-      ? contractAddress
-      : process.env.CONTRACT_ADDRESS;
+  constructor(
+    abiJSON = standartABI,
+    contractAddress = process.env.CONTRACT_ADDRESS,
+  ) {
+    this.abi = abiJSON.abi;
+    this.contractAddress = contractAddress;
+  }
+
+  private async executeTransaction(
+    privateKey: string | undefined,
+    methodName: string,
+    params?: any,
+    isSendTx = true,
+  ): Promise<any> {
+    const web3Connection = new Web3Connection({
+      web3Host: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      privateKey,
+    });
+
+    web3Connection.start();
+
+    const model = new Model(web3Connection, this.abi, this.contractAddress);
+
+    const tx = isSendTx
+      ? await model.sendTx(
+          params
+            ? model.contract.methods[methodName](...params)
+            : model.contract.methods[methodName](),
+        )
+      : await model.callTx(
+          params
+            ? model.contract.methods[methodName](...params)
+            : model.contract.methods[methodName](),
+        );
+
+    return tx;
   }
 
   async adminSendTransaction(
     methodName: string,
     params?: any,
   ): Promise<TransactionReceipt<any>> {
-    const web3Connection = new Web3Connection({
-      web3Host: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      privateKey: process.env.GOV_PRIVATE_KEY,
-    });
-
-    web3Connection.start();
-
-    const model = new Model(web3Connection, this.abi, this.contractAddress);
-
-    const tx = await model.sendTx(
-      params
-        ? model.contract.methods[methodName](...params)
-        : model.contract.methods[methodName](),
+    return this.executeTransaction(
+      process.env.GOV_PRIVATE_KEY,
+      methodName,
+      params,
     );
-
-    return tx;
   }
 
   async adminGetTransaction(methodName: string, params?: any): Promise<any> {
-    const web3Connection = new Web3Connection({
-      web3Host: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      privateKey: process.env.GOV_PRIVATE_KEY,
-    });
-
-    web3Connection.start();
-
-    const model = new Model(web3Connection, this.abi, this.contractAddress);
-
-    const tx = await model.callTx(
-      params
-        ? model.contract.methods[methodName](...params)
-        : model.contract.methods[methodName](),
+    return this.executeTransaction(
+      process.env.GOV_PRIVATE_KEY,
+      methodName,
+      params,
+      false,
     );
-
-    return tx;
   }
 
   async userSendTransaction(
@@ -60,22 +69,7 @@ export class DappKitFunctions {
     methodName: string,
     params?: any,
   ): Promise<TransactionReceipt<any>> {
-    const web3Connection = new Web3Connection({
-      web3Host: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      privateKey: privateKey,
-    });
-
-    web3Connection.start();
-
-    const model = new Model(web3Connection, this.abi, this.contractAddress);
-
-    const tx = await model.sendTx(
-      params
-        ? model.contract.methods[methodName](...params)
-        : model.contract.methods[methodName](),
-    );
-
-    return tx;
+    return this.executeTransaction(privateKey, methodName, params);
   }
 
   async userGetTransaction(
@@ -83,21 +77,6 @@ export class DappKitFunctions {
     methodName: string,
     params?: any,
   ): Promise<any> {
-    const web3Connection = new Web3Connection({
-      web3Host: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      privateKey: privateKey,
-    });
-
-    web3Connection.start();
-
-    const model = new Model(web3Connection, this.abi, this.contractAddress);
-
-    const tx = await model.callTx(
-      params
-        ? model.contract.methods[methodName](...params)
-        : model.contract.methods[methodName](),
-    );
-
-    return tx;
+    return this.executeTransaction(privateKey, methodName, params, false);
   }
 }
