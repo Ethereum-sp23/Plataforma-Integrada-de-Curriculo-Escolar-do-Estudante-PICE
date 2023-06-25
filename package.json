@@ -1,8 +1,0 @@
-{
-	"dependencies": {
-		"@pinata/sdk": "^2.1.0"
-	},
-	"scripts": {
-		"heroku-postbuild": "cd backend && npm run build"
-	}
-}
