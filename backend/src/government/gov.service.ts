@@ -153,6 +153,53 @@ export class GovernmentService {
     };
   }
 
+  async getStudents(): Promise<Response> {
+    const { data, error } = await supabase
+      .from('gov_people')
+      .select('id, name, address, email, course');
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    if (!data.length) {
+      return { message: 'No data found!', data: null };
+    }
+
+    return {
+      message: 'Everyone in your hands...',
+      data: data,
+    };
+  }
+
+  async setStudent(stundetId, schoolId): Promise<string | Response> {
+    const { data: student, error: studentError } = await supabase
+      .from('gov_people')
+      .select('address')
+      .eq('id', stundetId);
+
+    const { data: school, error: schoolError } = await supabase
+      .from('gov_people')
+      .select('address')
+      .eq('id', schoolId);
+
+    if (studentError || schoolError) {
+      throw new Error(studentError.message || schoolError.message);
+    }
+
+    if (!student || !school) {
+      return { message: 'No data found!', data: null };
+    }
+
+    const contract = new DappKitFunctions();
+    await contract.adminSendTransaction('addStudentToSchool', [
+      student[0].address,
+      school[0].address,
+    ]);
+
+    return "Student's school updated successfully!";
+  }
+
   // async deleteSchool(email: string): Promise<string> {
   //   const { data, error: selectError } = await supabase
   //     .from('gov_schools')

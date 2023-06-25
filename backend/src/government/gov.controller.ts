@@ -84,4 +84,26 @@ export class GovernmentController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @Get('/allStudents')
+  async getAllStudents(): Promise<Response> {
+    try {
+      const res = await this.GovernmentService.getStudents();
+      return res;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Get('/setStudent/:stundetId/:schoolId')
+  async setStudent(
+    @Param() { stundetId, schooId },
+  ): Promise<string | Response> {
+    try {
+      const res = await this.GovernmentService.setStudent(stundetId, schooId);
+      return res;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }
