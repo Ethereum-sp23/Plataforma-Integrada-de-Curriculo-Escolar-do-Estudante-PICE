@@ -80,10 +80,10 @@ const SeeStudent = ({ link, noActions }: SeeStudentProps) => {
         []
     );
 
-    const actionItems = (wallet: string) => {
+    const actionItems = (id: string) => {
         return [
-            <ActionItem key={1} icon="visibility" label="Ver informações" link={"/student/" + wallet} />,
-            <ActionItem key={2} icon="edit" label="Adicionar atividade" link={`/institution/${wallet}/edit/`} />,
+            <ActionItem key={1} icon="visibility" label="Ver informações" link={"/student/" + id} />,
+            <ActionItem key={2} icon="edit" label="Adicionar atividade" link={`/institution/${id}/edit/`} />,
         ];
     };
 

@@ -11,7 +11,7 @@ import { useAuth } from "@/contexts/auth";
 import { axios } from "@/config/axios";
 
 interface EditStudentProps {
-    params: { wallet: string };
+    params: { id: string };
 }
 
 const schema = yup.object({
@@ -42,7 +42,7 @@ const EditStudent = ({ params }: EditStudentProps) => {
         const bodyFormData = new FormData();
         bodyFormData.append("file", file);
         bodyFormData.append("metadata", data.name);
-        bodyFormData.append("studentAddress", params.wallet);
+        bodyFormData.append("studentAddress", params.id);
         bodyFormData.append("schoolAuth", account as string);
 
         try {
@@ -51,7 +51,7 @@ const EditStudent = ({ params }: EditStudentProps) => {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-    
+            toast.success("Atividade criada com sucesso.")
             console.log(res)
         } catch (error) {
             console.log(error)

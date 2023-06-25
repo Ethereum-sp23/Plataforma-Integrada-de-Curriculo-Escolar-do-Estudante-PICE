@@ -7,20 +7,31 @@ import CurriculumItem from "@/components/curriculumItem";
 import { curriculumItems, studentInfoItems } from "./data";
 import { LoadingState } from "@taikai/rocket-kit";
 import EditStudent from "@/components/editStudent";
+import { toast } from "react-toastify";
+import { axios } from "@/config/axios";
 
-const Student = ({ params }: { params: { wallet: string } }) => {
+const Student = ({ params }: { params: { id: string } }) => {
     const [loading, setLoading] = React.useState(true);
+    const [student, setStudent] = React.useState(null);
+
+    const getInfo = async () => {
+        try {
+            const res = await axios.get("/student/getStudentById/" + params.id);
+            setStudent(res.data.data);
+        } catch (error) {
+            console.log(error);
+            toast.error("Erro ao carregar dados do estudante");
+        }
+        setLoading(false);
+    };
 
     React.useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+        getInfo();
     }, []);
 
     return (
         <div className="bg-gray-300 h-full pb-4 min-h-[100vh]">
-            <StudentHeader />
+            <StudentHeader student={student} loading={loading}  />
             <div className="flex gap-6 m-6">
                 <Card title="Histórico de atividades" classes="grow">
                     {!loading ? (
