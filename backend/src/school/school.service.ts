@@ -145,6 +145,10 @@ export class SchoolService {
       data[0].address,
     ]);
 
+    if (res.length === 0) {
+      return 'No students found!';
+    }
+
     const { data: students, error: studentsError } = await supabase
       .from('gov_students')
       .select('id, name, email, address, course')
