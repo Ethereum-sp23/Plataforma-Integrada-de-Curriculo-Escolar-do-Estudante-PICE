@@ -46,7 +46,7 @@ export class SchoolController {
     @UploadedFile() file,
     @Body() body: CreateNFTBody,
   ): Promise<Response> {
-    // try {
+    try {
     const newFile = new Readable();
     newFile.push(file.buffer);
     newFile.push(null);
@@ -55,9 +55,9 @@ export class SchoolController {
     return {
       message: res,
     };
-    // } catch (error) {
-    //   throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    // }
+     } catch (error) {
+       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+     }
   }
 
   @Get('/getSchoolNFTsByAddress/:address')
