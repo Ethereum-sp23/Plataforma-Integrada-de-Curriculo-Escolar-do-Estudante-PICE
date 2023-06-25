@@ -9,16 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@taikai/dappkit": "^2.3.1",
+    "@taikai/rocket-kit": "^3.0.2",
     "@types/node": "20.3.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
+    "@walletconnect/web3-provider": "^1.8.0",
     "autoprefixer": "10.4.14",
+    "electron": "^25.2.0",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
+    "ethers": "^6.6.1",
+    "material-react-table": "^1.14.0",
     "next": "13.4.7",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.0",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.3"
   }

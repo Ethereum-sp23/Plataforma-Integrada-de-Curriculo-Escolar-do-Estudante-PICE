@@ -2,11 +2,11 @@
 
 ![1687646925848](image/README/1687646925848.png)
 
-Rastreie e valide o histórico escolar do aluno com nosso sistema blockchain baseado em NFTs. Com acesso garantido para instituições e gerenciado pelo governo, nossa solução transparente simplifica a verificação acadêmica. Construa um futuro educacional conectado e eficiente com a tecnologia de ponta.
+A PICE é uma plataforma de registro acadêmico baseada em blockchain que capacita os estudantes, permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para uma educação de qualidade e, assim, atingir a ODS 4 da ONU - Educação de Qualidade.
 
 ## Cenário
 
-No Brasil, a educação é um direito garantido pela Constituição, segundo o Artigo 205, em que diz: ‘A educação, direito de todos e dever do Estado e da família, será promovida e incentivada com a colaboração da sociedade, visando ao pleno desenvolvimento da pessoa, seu preparo para o exercício da cidadania e sua qualificação para o trabalho., e é composta por diferentes etapas e atores:
+No Brasil, a educação é um direito garantido pela Constituição, segundo o Artigo 205, em que diz: ‘A educação, direito de todos e dever do Estado e da família, será promovida e incentivada com a colaboração da sociedade, visando ao pleno desenvolvimento da pessoa, seu preparo para o exercício da cidadania e sua qualificação para o trabalho', e é composta por diferentes etapas e atores:
 
 1. Educação Básica: A educação básica no Brasil é obrigatória dos 4 aos 17 anos e é dividida em duas etapas: educação infantil (creche e pré-escola), que atende crianças de 0 a 5 anos, e ensino fundamental, que compreende do 1º ao 9º ano. A partir dos 15 anos, os estudantes podem ingressar no ensino médio, que corresponde do 1º ao 3º ano.
 2. Gestores educacionais: O Ministério da Educação (MEC) é o órgão responsável por formular e implementar as políticas educacionais em nível federal. Além disso, cada estado e município possui suas secretarias de educação, que são responsáveis pela gestão e implementação das políticas educacionais em nível regional.
@@ -34,14 +34,14 @@ Todos esses componentes constituem a esfera educacional brasileira e, principalm
 
 A partir de um sistema de currículos unificado com o sistema blockchain, será possível documentar as conquistas e experiências educacionais de um estudante, permitindo que eles se destaquem, se comuniquem de forma eficaz e construam uma base sólida para seu futuro acadêmico e profissional. A partir dos problemas descritos acima, os objetivos da solução apresentada são:
 
-1. Ter um registro completo de conquistas dos estudantes: Um currículo sobre a vida escolar permite que os estudantes documentem todas as suas conquistas acadêmicas, como prêmios, honras, atividades extracurriculares e participação em projetos especiais. Isso ajuda a destacar suas realizações e habilidades ao se candidatarem a universidades, bolsas de estudo ou oportunidades de emprego no futuro;
-2. Facilitar a verificação de informações: Ter um currículo bem organizado e detalhado sobre a vida escolar facilita a verificação de informações por parte de instituições acadêmicas, empregadores ou outras entidades interessadas. Isso ajuda a estabelecer credibilidade e confiança nas realizações acadêmicas e extracurriculares do estudante;
-3. Preparar para processos de admissão e seleção: Muitas universidades e programas de bolsas de estudo exigem que os estudantes apresentem um currículo detalhado durante o processo de admissão ou seleção. Ter um currículo sobre a vida escolar bem elaborado e atualizado permite que os estudantes se destaquem entre os candidatos, ressaltando suas realizações e experiências relevantes e
-4. Facilitar a comunicação e networking: Ao compartilhar um currículo sobre sua vida escolar, os estudantes têm uma ferramenta poderosa para se comunicar de forma clara e eficaz com outras pessoas. Isso pode incluir professores, orientadores, mentores, colegas e profissionais da área educacional. Um currículo bem elaborado ajuda a transmitir informações importantes e a estabelecer conexões significativas.
+1. **Ter um registro completo de conquistas dos estudantes**: Um currículo sobre a vida escolar permite que os estudantes documentem todas as suas conquistas acadêmicas, como prêmios, honras, atividades extracurriculares e participação em projetos especiais. Isso ajuda a destacar suas realizações e habilidades ao se candidatarem a universidades, bolsas de estudo ou oportunidades de emprego no futuro;
+2. **Facilitar a verificação de informações**: Ter um currículo bem organizado e detalhado sobre a vida escolar facilita a verificação de informações por parte de instituições acadêmicas, empregadores ou outras entidades interessadas. Isso ajuda a estabelecer credibilidade e confiança nas realizações acadêmicas e extracurriculares do estudante. Além disso, guardar todas as informações em um sistema verificável por todas as partes facilita nos processos que exigem comunicação entre as instituições, como matrículas e transferências;
+3. **Preparar para processos de admissão e seleção**: Muitas universidades e programas de bolsas de estudo exigem que os estudantes apresentem um currículo detalhado durante o processo de admissão ou seleção. Ter um currículo sobre a vida escolar bem elaborado e atualizado permite que os estudantes se destaquem entre os candidatos, ressaltando suas realizações e experiências relevantes e
+4. **Melhoria da qualidade da educação nacional**: Ao coletar mais dados sobre o desempenho real dos alunos, visto que o Governo controla todo o sistema, é possível avaliar de forma mais precisa a qualidade das escolas e do sistema educacional e identificar possíveis melhorias. Isso abre caminho para uma maior transparência e prestação de contas no sistema educacional para a sociedade como um todo.
 
 ### Justificativa:
 
-A partir dos objetivos descrito acima a serem atingidos com a Plataforma Integrada de Currículo Escolar do Estudante traz benefícios significativos que se alinham aos três pilares do blockchain: escalabilidade, segurança e descentralização, tendo em vista que, dessa maneira, é possível garantir segurança e integridade dos dados dos alunos, pois a blockchain oferece um ambiente altamente seguro e imutável para armazenar tais dados que, criptografados e distribuídos em uma rede descentralizada, dificulta a adulteração ou falsificação das informações. Isso garante a integridade dos dados e a confiabilidade das realizações acadêmicas dos estudantes e, consequentemente, a rastreabilidade e transparência, de maneira simplificada, os dados curriculares dos estudantes são facilmente auditáveis pelas instituições . Qualquer alteração ou atualização feita no histórico escolar do estudante é registrada na blockchain, criando um registro transparente e auditável. Isso ajuda a combater fraudes e fornecer confiança nas realizações educacionais.
+A partir dos objetivos descrito acima a serem atingidos com a Plataforma Integrada de Currículo Escolar do Estudante, ela traz benefícios significativos que se alinham aos três pilares do blockchain: escalabilidade, segurança e descentralização, tendo em vista que, dessa maneira, é possível garantir segurança e integridade dos dados dos alunos, pois a blockchain oferece um ambiente altamente seguro e imutável para armazenar tais dados que, criptografados e distribuídos em uma rede descentralizada, dificulta a adulteração ou falsificação das informações. Isso garante a integridade dos dados e a confiabilidade das realizações acadêmicas dos estudantes e, consequentemente, a rastreabilidade e transparência, de maneira simplificada, os dados curriculares dos estudantes são facilmente auditáveis pelas instituições e pela sociedade como um todo. Qualquer alteração ou atualização feitas no histórico escolar do estudante é registrada na blockchain, criando um registro transparente e auditável. Isso ajuda a combater fraudes e fornecer confiança nas realizações educacionais.
 
 Ademais, também permite a portabilidade dos dados, pois os estudantes têm controle sobre seus próprios dados acadêmicos, ou seja, eles podem compartilhar seletivamente seus registros educacionais com instituições de ensino, empregadores ou outras partes interessadas, sem precisar enviar cópias físicas ou depender de intermediários, o que oferece maior privacidade e conveniência no processo de compartilhamento de informações.
 
@@ -51,7 +51,7 @@ Por fim, é possível fornecer um acesso global e inclusão, visto que a naturez
 
 A utilização da blockchain para registrar o currículo sobre a vida escolar traz maior segurança, transparência, portabilidade e agilidade nos processos de verificação, além de promover a inclusão e a confiança nas realizações acadêmicas dos estudantes.
 
-Por fim, a escolha de um sistema unificado de currículos estudantis surgiu do já existente Lattes, trazendo os benefícios dessa abordagem para o contexto da educação básica:
+Por fim, a escolha de um sistema unificado de currículos estudantis surgiu do já existente Lattes, trazendo os benefícios dessa abordagem para o contexto da educação básica. O Lattes oferece os seguintes benefícios claros aos acadêmicos:
 
 1. Registro completo da produção acadêmica: O currículo Lattes permite que pesquisadores e profissionais da área acadêmica registrem de forma abrangente sua produção científica, como artigos publicados, livros, capítulos de livros, participação em congressos, orientações de alunos, projetos de pesquisa e outras atividades relevantes. Isso proporciona um registro completo e atualizado da trajetória acadêmica e contribuições para a ciência;
 2. Visibilidade e reconhecimento: O currículo Lattes é amplamente utilizado e reconhecido no meio acadêmico no Brasil. Ele oferece uma plataforma para pesquisadores divulgarem suas realizações e tornarem suas contribuições científicas mais visíveis. Através do currículo Lattes, é possível compartilhar informações sobre suas publicações, projetos e colaborações, aumentando a exposição e o reconhecimento dentro da comunidade acadêmica;
@@ -60,10 +60,10 @@ Por fim, a escolha de um sistema unificado de currículos estudantis surgiu do j
 
 Em resumo, somar os benefícios de um currículo Lattes no âmbito acadêmico e dos três pilares blockchain: escalabilidade, segurança e descentralização para a criação de uma plataforma curricular estudantil é uma maneira valiosa de documentar as conquistas e experiências educacionais de um estudante, permitindo que eles se destaquem, se comuniquem de forma eficaz e construam uma base sólida para seu futuro acadêmico e profissional e, portanto, permite a melhoria de diversos pontos:
 
-1. Melhor distribuição de cotas em universidades, pois  avaliando o desempenho real dos alunos, garante que as cotas sejam atribuídas com base na situação e méritos acadêmicos, em vez de presunções raciais. Isso promove uma distribuição mais justa e igualitária de oportunidades educacionais;
-2. Avaliação mais precisa da qualidade das escolas, pois ao coletar e analisar dados abrangentes sobre o desempenho dos alunos, a plataforma curricular permite uma avaliação mais precisa da qualidade das escolas. Isso ajuda a identificar possíveis deficiências e áreas que precisam de melhorias, contribuindo para o aprimoramento do sistema educacional como um todo;
-3. Abre portas para a implementação de elementos de gamificação na educação, engajando o aluno de forma lúdica, o que pode estimular o aprendizado e a participação ativa e
-4. Ao visualizar seu próprio desempenho de forma clara e transparente na plataforma curricular, o aluno pode entender e apreciar o impacto direto de seu esforço e dedicação na escola. Isso promove uma maior motivação e autoconhecimento, incentivando-os a se empenharem ainda mais em seu desenvolvimento acadêmico.
+1. **Melhor distribuição de cotas em universidades**, pois  avaliando o desempenho real dos alunos, garante que as cotas sejam atribuídas com base na situação e méritos acadêmicos, em vez de presunções raciais. Isso promove uma distribuição mais justa e igualitária de oportunidades educacionais;
+2. **Avaliação mais precisa da qualidade das escolas**, pois ao coletar e analisar dados abrangentes sobre o desempenho dos alunos, a plataforma curricular permite uma avaliação mais precisa da qualidade das escolas. Isso ajuda a identificar possíveis deficiências e áreas que precisam de melhorias, contribuindo para o aprimoramento do sistema educacional como um todo;
+3. **Rastreabilidade e visualização dos dados pela sociedade**, pois com a coleta de dados, qualquer pessoa pode visualizar informações sobre os alunos e assim saber como a educação do país está, visando melhorias contínuas no seu acesso e qualidade e
+4. Ao **visualizar seu próprio desempenho de forma clara e transparente** na plataforma curricular, o aluno pode entender e apreciar o impacto direto de seu esforço e dedicação na escola. Isso promove uma maior motivação e autoconhecimento, incentivando-os a se empenharem ainda mais em seu desenvolvimento acadêmico.
 
 ## A solução e a ODS
 
@@ -123,4 +123,20 @@ As regras de negócio do contrato "EducationSystem" são as seguintes:
    - A função `seeOwnedNFTs` permite que qualquer pessoa consulte os IDs dos NFTs de propriedade de um determinado estudante, fornecendo o endereço do estudante como parâmetro.
 9. Consulta da Origem de um NFT:
 
-   - A função `seeNFTOrigin` permite que qualquer pessoa consulte o endereço da escola emissora de um determinado NFT, fornecendo o ID do NFT como parâmetro.
+   - A função `seeNFTOrigin` permite que qualquer pessoa consulte o endereço da escola emissora de um determinado NFT, fornecendo o ID do NFT como parâmetro.Estrutura de pastas
+
+## Diagrama de Blocos
+
+Um diagrama de blocos é uma representação gráfica que descreve a estrutura e o fluxo de um sistema ou processo. Ele usa blocos ou retângulos para representar diferentes etapas ou componentes do sistema, e setas para indicar a direção do fluxo de informações ou controle entre os blocos.
+
+O objetivo principal de um diagrama de blocos é visualizar de forma clara e concisa o funcionamento interno de um sistema complexo, mostrando como os diferentes componentes se relacionam e interagem entre si, ajudando a identificar os principais elementos do sistema, suas funções e como estão conectados, permitindo uma compreensão geral do processo ou sistema em questão.
+
+![1687658514257](image/README/1687658514257.png)
+
+No diagrama de blocos acima existem dois atores principais que interagem com o sistema: aluno e instituição de ensino. Esses atores interagem com o sistema através da interface frontend. Para o aluno, basta pesquisar seu nome e todo seu currículo aparece para visualização. Para a instituição, após o cadastro do Governo no sistema através da API, com sua carteira, é necessário realizar o login, visto que, para criar NFTs das atividades dos alunos, é necessário assinar as transações.
+
+No Backend, as informações dos alunos, assim como das instituições, são salvas e somente acessadas pelo Governo. Esse bloco simula o Sistema Educacional Brasileiro (SEB), um cadastro contínuo, preenchido e atualizado pelas intituições de educação que reúne dados do corpo docente e discente e que permite o compartilhamento
+
+Por fim, o bloco blockchain consiste num contrato, em que é possível cadastrar uma nova instituição de ensino, criar, consultar e excluir um estudante, emitir, consultar e destruir um NFT e, finalmente, consultar NFTs de uma propriedade única e a origem de emissão do NFT. Todas as funções que ocorrem dentro do contrato estão especificadas na seção acima. Por fim, o contrato é deployado na testnet da Sepolia para permitir a interação dele com os atores.
+
+## Estrutura de Pastas
