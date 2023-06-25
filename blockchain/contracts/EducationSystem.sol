@@ -6,7 +6,6 @@ import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-
 contract EducationSystem is ERC721URIStorage {
    using Counters for Counters.Counter;
    Counters.Counter private _tokenIds;
@@ -18,10 +17,10 @@ contract EducationSystem is ERC721URIStorage {
    mapping(address => uint256[]) public schoolNFTsBySchool;
    mapping(uint => string) public ipfsById;
    mapping(address => address[]) public studentsBySchool;
+   mapping(address => mapping(address => bool)) public allowedSchoolsStatus;
 
    struct Student {
       address[] schoolsAllowed;
-    //   mapping(address => bool) schoolsAllowedStatus;
       uint256[] ownedNFTs;
    }
 
@@ -67,6 +66,7 @@ contract EducationSystem is ERC721URIStorage {
       );
       students[_studentAddress].schoolsAllowed.push(msg.sender);
       studentsBySchool[_schoolAddress].push(_studentAddress);
+      allowedSchoolsStatus[_studentAddress][_schoolAddress] = true;
    }
 
    function getStudent(address _studentAddress) public view returns (address[] memory, uint256[] memory) {
