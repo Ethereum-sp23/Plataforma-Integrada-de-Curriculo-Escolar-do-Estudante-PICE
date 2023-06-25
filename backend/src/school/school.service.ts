@@ -3,33 +3,43 @@ import { supabase } from 'src/main';
 import { DappKitFunctions } from 'src/utils/dappKitFunctions';
 import PinataClient from '@pinata/sdk';
 import bcrypt from 'bcryptjs';
-import { LoginBodyDto } from './dto/school.dto';
-import { Response } from './dto/school.dto';
+import { CreateAccountResponse, LoginBodyDto } from './dto/school.dto';
+import { Response, CreatePersonBody } from './dto/school.dto';
 import axios from 'axios';
+import Web3 from 'web3';
 // interface CreateNFTBody {}
 @Injectable()
 export class SchoolService {
   private pinata: PinataClient;
 
   constructor() {
-    // this.pinata = new PinataClient('<seu_pinata_api_key>', '<seu_pinata_api_secret>');
+    this.pinata = new PinataClient(
+      process.env.PINATA_API_KEY,
+      process.env.PINATA_SECRET_KEY,
+    );
   }
 
-  async mintNFT({
-    image,
-    metadata,
-    studentAddress,
-    schoolEmail,
-  }): Promise<string> {
+  async mintNFT(
+    { metadata, studentAddress, schoolAuth },
+    file,
+  ): Promise<string> {
+
+    let desiredAuthMethod = ""
+    if (schoolAuth.includes('@') && !schoolAuth.includes('0x')) desiredAuthMethod = 'email'
+    else desiredAuthMethod = 'address'
+
+    console.log("----------", desiredAuthMethod)
     const { data, error } = await supabase
       .from('gov_schools')
       .select('*')
-      .eq('email', schoolEmail);
+      .eq(desiredAuthMethod, schoolAuth);
+    
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
     //--------------------------------------------------------------------------------------
+
     if (!image) {
       throw new HttpException(
         'Please select an image to upload',
@@ -37,60 +47,41 @@ export class SchoolService {
       );
     }
 
-    const imageFormData = new FormData();
-    imageFormData.append('file', image);
 
-    const imageUploadingResponse = await axios({
-      method: 'post',
-      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
-      data: imageFormData,
-      headers: {
-        pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-        pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-        'Content-Type': 'multipart/form-data',
+    const imageFormData = new FormData();
+    imageFormData.append('file', file);
+
+    const imageUploadingResponse = await this.pinata.pinFileToIPFS(file, {
+      pinataMetadata: {
+        name: 'CIDE record',
+      },
+      pinataOptions: {
+        cidVersion: 0,
       },
     });
 
-    const uploadedImageLink = `https://ipfs.io/ipfs/${imageUploadingResponse.data.IpfsHash}`;
+    const uploadedImageLink = `https://ipfs.io/ipfs/${imageUploadingResponse.IpfsHash}`;
 
     //--------------------------------------------------------------------------------------
 
-    const NFTFormData = new FormData();
-    NFTFormData.append('image', uploadedImageLink);
-    NFTFormData.append('metadata', metadata);
+    const IPFSJson = {
+      image: uploadedImageLink,
+      metadata: metadata,
+    };
 
-    const NFTUploadingResponse = await axios({
-      method: 'post',
-      url: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
-      data: NFTFormData,
-      headers: {
-        pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-        pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const NFTuploadingResponse = await this.pinata.pinJSONToIPFS(IPFSJson);
 
-    const finalIPFSLink = `https://ipfs.io/ipfs/${NFTUploadingResponse.data.IpfsHash}`;
+    const finalIPFSLink = `https://ipfs.io/ipfs/${NFTuploadingResponse.IpfsHash}`;
 
     const contract = new DappKitFunctions();
 
+    console.log(data[0].private_key)
     await contract.userSendTransaction(data[0].private_key, 'issueNFT', [
       studentAddress,
       finalIPFSLink,
     ]);
 
     return 'NFT created successfully!';
-  }
-
-  async sendFileToIpfs(filename, title) {
-    const { IpfsHash } = await this.pinata.pinFileToIPFS(ReadableStream, {
-      pinataMetadata: {
-        image: filename,
-        name: title,
-      },
-    });
-
-    return IpfsHash;
   }
 
   async getSchoolNFTs(address: string): Promise<string> {
@@ -186,5 +177,52 @@ export class SchoolService {
     }
 
     return { message: 'All students get!', data: studentsWithStatus };
+  }
+
+  async createPerson(
+    schoolAccount: string,
+    body: CreatePersonBody,
+  ): Promise<string> {
+    if (!schoolAccount.startsWith('0x')) {
+      const { data, error } = await supabase
+        .from('gov_schools')
+        .select('*')
+        .eq('email', schoolAccount);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      schoolAccount = data[0].address;
+    }
+
+    const web3: Web3 = new Web3(
+      `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}}`,
+    );
+    const { address, privateKey }: CreateAccountResponse =
+      web3.eth.accounts.create();
+
+    const contract = new DappKitFunctions();
+
+    await contract.adminSendTransaction('createStudent', [
+      address,
+      schoolAccount,
+    ]);
+
+    const { error } = await supabase.from('gov_people').insert([
+      {
+        name: body.name,
+        email: body.email,
+        course: body.course,
+        address: address,
+        private_key: privateKey,
+      },
+    ]);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return 'Person created successfully!';
   }
 }

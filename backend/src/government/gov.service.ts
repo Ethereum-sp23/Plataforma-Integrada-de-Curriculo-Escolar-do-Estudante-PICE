@@ -22,6 +22,10 @@ export class GovernmentService {
     );
     const account: CreateAccountResponse = web3.eth.accounts.create();
 
+    const contract = new DappKitFunctions();
+
+    await contract.adminSendTransaction('createStudent', [account.address, '']);
+
     const { error } = await supabase.from('gov_people').insert([
       {
         name: body.name,

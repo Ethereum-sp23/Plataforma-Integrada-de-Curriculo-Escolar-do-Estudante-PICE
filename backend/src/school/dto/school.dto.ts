@@ -2,7 +2,7 @@ export interface CreateNFTBody {
   image: File;
   metadata: string;
   studentAddress: string;
-  schoolEmail: string;
+  schoolAuth: string;
 }
 
 export interface LoginBodyDto {
@@ -13,4 +13,18 @@ export interface LoginBodyDto {
 export interface Response {
   message: string;
   data?: any;
+}
+
+export interface CreatePersonBody {
+  name: string;
+  email: string;
+  course: string;
+}
+
+export interface CreateAccountResponse {
+  address: string;
+  privateKey: string;
+  signTransaction: Function;
+  sign: Function;
+  encrypt: Function;
 }

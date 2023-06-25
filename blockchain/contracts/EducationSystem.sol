@@ -6,6 +6,7 @@ import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
+
 contract EducationSystem is ERC721URIStorage {
    using Counters for Counters.Counter;
    Counters.Counter private _tokenIds;
@@ -16,8 +17,9 @@ contract EducationSystem is ERC721URIStorage {
    mapping(uint256 => SchoolNFT) public schoolNFTs;
    mapping(address => uint256[]) public schoolNFTsBySchool;
    mapping(uint => string) public ipfsById;
-   mapping(address => address[]) public studentsBySchool;
+   mapping(address => address[]) public studentsBySchool; // update
    mapping(address => mapping(address => bool)) public allowedSchoolsStatus;
+   mapping(address => address[]) public schoolsByStudent;
 
    struct Student {
       address[] schoolsAllowed;
@@ -75,6 +77,34 @@ contract EducationSystem is ERC721URIStorage {
 
     function deleteStudent(address _studentAddress) public onlySchoolsOrGoverment {
         delete students[_studentAddress];
+    }
+
+    function addStudentToSchool(address _studentAddress, address _schoolAddress) public onlySchoolsOrGoverment {
+        Student storage student = students[_studentAddress];
+        schoolsByStudent[_studentAddress].push(_schoolAddress);
+        studentsBySchool[_schoolAddress].push(_studentAddress);
+        student.schoolsAllowed.push(_schoolAddress);
+    }
+
+    function removeSchool(address _studentAddress, address _schoolAddress) public {
+        Student storage student = students[_studentAddress];
+        uint index = 0;
+        bool found = false;
+
+        for(uint i = 0; i < student.schoolsAllowed.length; i++) {
+            if(student.schoolsAllowed[i] == _schoolAddress) {
+                index = i;
+                found = true;
+                break;
+            }
+        }
+
+        if(!found) return;
+
+        for (uint i = index; i < student.schoolsAllowed.length - 1; i++){
+            student.schoolsAllowed[i] = student.schoolsAllowed[i+1];
+        }
+        student.schoolsAllowed.pop();
     }
 
     function issueNFT(address _studentAddress, string memory _tokenURI) public onlySchoolsOrGoverment {
