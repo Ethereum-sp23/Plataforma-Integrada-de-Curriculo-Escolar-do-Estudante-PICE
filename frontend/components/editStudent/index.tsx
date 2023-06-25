@@ -11,7 +11,7 @@ import { useAuth } from "@/contexts/auth";
 import { axios } from "@/config/axios";
 
 interface EditStudentProps {
-    params: { wallet: string };
+    params: { id: string };
 }
 
 const schema = yup.object({
@@ -42,23 +42,21 @@ const EditStudent = ({ params }: EditStudentProps) => {
         const bodyFormData = new FormData();
         bodyFormData.append("file", file);
         bodyFormData.append("metadata", data.name);
-        bodyFormData.append("studentAddress", params.wallet);
+        bodyFormData.append("studentId", params.id);
         bodyFormData.append("schoolAuth", account as string);
 
         try {
-            const res = await axios.post('/school/createNFT', bodyFormData, {
+            const res = await axios.post("/school/createNFT", bodyFormData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-    
-            console.log(res)
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            console.log(res);
         } catch (error) {
-            console.log(error)
-            toast.error("Ocorreu um erro ao criar o NFT.")
+            console.log(error);
+            toast.error("Ocorreu um erro ao criar o NFT.");
         }
-         
-           
     };
 
     return (

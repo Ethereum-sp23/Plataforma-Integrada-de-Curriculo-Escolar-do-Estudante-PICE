@@ -1,7 +1,7 @@
 export interface CreateNFTBody {
   image: File;
   metadata: string;
-  studentAddress: string;
+  studentId: string;
   schoolAuth: string;
 }
 
@@ -24,7 +24,7 @@ export interface CreatePersonBody {
 export interface CreateAccountResponse {
   address: string;
   privateKey: string;
-  signTransaction: Function;
-  sign: Function;
-  encrypt: Function;
+  signTransaction: any;
+  sign: any;
+  encrypt: any;
 }
