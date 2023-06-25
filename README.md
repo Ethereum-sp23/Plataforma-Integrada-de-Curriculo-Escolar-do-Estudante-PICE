@@ -2,7 +2,7 @@
 
 ![1687646925848](image/README/1687646925848.png)
 
-A PICE é uma plataforma de registro acadêmico baseada em blockchain que capacita os estudantes, permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para uma educação de qualidade e, assim, atingir a ODS 4 da ONU - Educação de Qualidade.
+A PICE é uma plataforma de registro acadêmico baseada em blockchain que empodera os estudantes, permitindo que eles destaquem suas conquistas de forma tangível em candidaturas e contribuindo para uma educação de qualidade e, assim, atingir a ODS 4 da ONU - Educação de Qualidade.
 
 ## Cenário
 
@@ -20,7 +20,7 @@ Todos esses componentes constituem a esfera educacional brasileira e, principalm
 
 ## Definição  do Problema
 
-É importante ressaltar que existem desafios a serem enfrentados no sistema educacional brasileiro, como a desigualdade de acesso, a qualidade desigual entre as escolas, a formação e valorização dos professores e a falta de recursos adequados. No entanto, o Brasil tem implementado iniciativas e políticas visando a melhoria da educação e o aumento da equidade no acesso ao conhecimento. Dentre os problemas, os seguintes podem ser citados:
+É importante ressaltar que existem desafios a serem enfrentados no sistema educacional brasileiro, como a desigualdade de acesso, a qualidade desigual entre as escolas, a falta de valorização dos professores e a falta de recursos adequados. No entanto, o Brasil tem implementado iniciativas e políticas visando a melhoria da educação e o aumento da equidade no acesso ao conhecimento. Dentre os problemas, os seguintes podem ser citados:
 
 1. Falta de documentação adequada: Muitas vezes, os estudantes enfrentam dificuldades para documentar e comprovar suas conquistas acadêmicas, como prêmios, participação em projetos ou atividades extracurriculares.
 2. Dificuldades na transferência de informações: Quando os estudantes mudam de escola ou se matriculam em uma nova instituição, pode haver uma perda de informações sobre seu histórico acadêmico.
