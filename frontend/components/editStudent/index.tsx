@@ -7,6 +7,12 @@ import * as yup from "yup";
 import Input from "../input";
 import { Button, FilePicker } from "@taikai/rocket-kit";
 import { toast } from "react-toastify";
+import { useAuth } from "@/contexts/metamask";
+import { axios } from "@/config/axios";
+
+interface EditStudentProps {
+    params: { wallet: string };
+}
 
 const schema = yup.object({
     name: yup.string().required("Esse campo é obrigatório."),
@@ -16,8 +22,8 @@ export type Inputs = {
     name: string;
 };
 
-const EditStudent = () => {
-    const router = useRouter();
+const EditStudent = ({ params }: EditStudentProps) => {
+    const { account } = useAuth();
     const [file, setFile] = React.useState<File | null>(null);
     const {
         control,
@@ -29,11 +35,30 @@ const EditStudent = () => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         if (!file) {
             return toast.error("Você precisa selecionar um arquivo.");
         }
+        const bodyFormData = new FormData();
+        bodyFormData.append("file", file);
+        bodyFormData.append("metadata", data.name);
+        bodyFormData.append("studentAddress", params.wallet);
+        bodyFormData.append("schoolAuth", account as string);
+
+        try {
+            const res = await axios.post('/school/createNFT', bodyFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+    
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+            toast.error("Ocorreu um erro ao criar o NFT.")
+        }
+         
+           
     };
 
     return (

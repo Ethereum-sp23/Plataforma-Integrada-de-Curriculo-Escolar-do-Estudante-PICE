@@ -8,7 +8,7 @@ import { curriculumItems, studentInfoItems } from "./data";
 import { LoadingState } from "@taikai/rocket-kit";
 import EditStudent from "@/components/editStudent";
 
-const Student = () => {
+const Student = ({ params }: { params: { wallet: string } }) => {
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -33,7 +33,7 @@ const Student = () => {
                         <LoadingState cardsNumber={8} center lines={14} type="text" />
                     )}
                 </Card>
-                <EditStudent />
+                <EditStudent params={params} />
             </div>
         </div>
     );

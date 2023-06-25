@@ -5,7 +5,7 @@ import Logo from "@/assets/logoText.png";
 import Link from "next/link";
 import { Icon } from "@taikai/rocket-kit";
 
-const InstitutionNavbar = () => {
+const Navbar = () => {
     return (
         <div className="border-b-2 sm:border-b-0 h-16 bg-white px-10 flex items-center">
             <Image src={Logo} height={32} alt="Logo" />
@@ -17,4 +17,4 @@ const InstitutionNavbar = () => {
     );
 };
 
-export default InstitutionNavbar;
+export default Navbar;

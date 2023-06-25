@@ -99,7 +99,7 @@ const Institution = () => {
                 data={data}
                 enableRowActions
                 positionActionsColumn="last"
-                renderRowActionMenuItems={({ row }) => actionItems(row._valuesCache.wallet)}
+                renderRowActionMenuItems={({ row }) => actionItems(row._valuesCache.address)}
             />
         </Card>
     );

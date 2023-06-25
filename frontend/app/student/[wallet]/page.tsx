@@ -8,15 +8,24 @@ import { curriculumItems, studentInfoItems } from "./data";
 import StudentInfoItem from "@/components/studentInfoItem";
 import Medals from "@/components/medals";
 import { LoadingState } from "@taikai/rocket-kit";
+import { toast } from "react-toastify";
+import { axios } from "@/config/axios";
 
-const Student = () => {
+const Student = ({ params }: { params: { wallet: string } }) => {
     const [loading, setLoading] = React.useState(true);
 
+    const getInfo = async () => {
+        try {
+            axios.get('/students/')
+        } catch (error) {
+            console.log(error);
+            toast.error("Erro ao carregar dados do estudante");
+        }
+        setLoading(false);
+    };
+
     React.useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+        getInfo();
     }, []);
 
     return (

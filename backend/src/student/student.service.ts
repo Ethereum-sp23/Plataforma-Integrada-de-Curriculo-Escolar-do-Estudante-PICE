@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 // import abiJson from './Abi.json';
 import { DappKitFunctions } from '../utils/dappKitFunctions';
 import axios from 'axios';
@@ -18,7 +18,8 @@ export class StudentService {
       .eq('address', address);
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+
     }
 
     console.log(
@@ -65,7 +66,8 @@ export class StudentService {
       .ilike('name', `%${name}%`);
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+
     }
 
     if (data.length === 0) {
