@@ -53,4 +53,17 @@ export class SchoolController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @Get('/getStudents/:email')
+  async getStudents({ email }): Promise<Response> {
+    try {
+      const res = await this.SchoolService.getStudents(email);
+      return {
+        message: typeof res === 'string' ? res : 'Students found!',
+        data: typeof res === 'string' ? null : res.data,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { supabase } from 'src/main';
 import { DappKitFunctions } from 'src/utils/dappKitFunctions';
 import PinataClient from '@pinata/sdk';
-// import Web3 from 'web3';
 import bcrypt from 'bcryptjs';
 import { LoginBodyDto } from './dto/school.dto';
+import { Response } from './dto/school.dto';
 import axios from 'axios';
 // interface CreateNFTBody {}
 @Injectable()
@@ -128,5 +128,43 @@ export class SchoolService {
     }
 
     return 'Usuário logado com sucesso!';
+  }
+
+  async getStudents(email: string): Promise<string | Response> {
+    const { data, error } = await supabase
+      .from('gov_schools')
+      .select('*')
+      .eq('email', email);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    const contract = new DappKitFunctions();
+    const res = await contract.adminGetTransaction('getStudentsBySchool', [
+      data[0].address,
+    ]);
+
+    const { data: students, error: studentsError } = await supabase
+      .from('gov_students')
+      .select('id, name, email, address, course')
+      .in('address', res);
+
+    if (studentsError) {
+      throw new Error(studentsError.message);
+    }
+
+    const studentsWithStatus = [];
+
+    for (let student of students) {
+      const studentData = await contract.adminGetTransaction(
+        'allowedSchoolsStatus',
+        [student.address, data[0].address],
+      );
+      console.log(studentData);
+      studentsWithStatus.push({ ...student, status: studentData });
+    }
+
+    return { message: 'All students get!', data: studentsWithStatus };
   }
 }

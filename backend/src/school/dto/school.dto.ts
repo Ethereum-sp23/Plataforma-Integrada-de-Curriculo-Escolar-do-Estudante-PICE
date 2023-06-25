@@ -9,3 +9,8 @@ export interface LoginBodyDto {
   email: string;
   password: string;
 }
+
+export interface Response {
+  message: string;
+  data?: any;
+}
