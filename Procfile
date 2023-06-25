@@ -1,1 +1,1 @@
-web: cd backend && pnpm run echo && pnpm run start:prod
+web: cd backend && npm run echo && npm run start:prod
