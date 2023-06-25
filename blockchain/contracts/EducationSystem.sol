@@ -4,88 +4,85 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract EducationSystem is ERC721 {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
 
-    address public government;
-    mapping(address => bool) public schools;
-    mapping(address => Student) students;
-    mapping(uint256 => SchoolNFT) public schoolNFTs;
-    mapping(address => uint256[]) public schoolNFTsBySchool;
+contract EducationSystem is ERC721URIStorage {
+   using Counters for Counters.Counter;
+   Counters.Counter private _tokenIds;
 
-    struct Student {
-        address[] schoolsAllowed;
-        uint256[] ownedNFTs;
-    }
+   address public government;
+   mapping(address => bool) public schools;
+   mapping(address => Student) students;
+   mapping(uint256 => SchoolNFT) public schoolNFTs;
+   mapping(address => uint256[]) public schoolNFTsBySchool;
+   mapping(uint => string) public ipfsById;
 
-    struct SchoolNFT {
-        uint256 id;
-        address schoolAddress;
-        address studentAddress;
-        uint256 issuedAt;
-    }
+   struct Student {
+      address[] schoolsAllowed;
+    //   mapping(address => bool) schoolsAllowedStatus;
+      uint256[] ownedNFTs;
+   }
 
-    uint256 public constant EXPIRY_PERIOD = 30 days;
+   struct SchoolNFT {
+      uint256 id;
+      address schoolAddress;
+      address studentAddress;
+      uint256 issuedAt;
+   }
 
-    constructor() ERC721("EducationSystemNFT", "ESN") {
-        government = msg.sender;
-    }
+   uint256 public constant EXPIRY_PERIOD = 30 days;
 
-    modifier onlyGovernment() {
-        require(
-            msg.sender == government,
-            "Only the government can perform this action"
-        );
-        _;
-    }
+   constructor() ERC721("EducationSystemNFT", "ESN") {
+      government = msg.sender;
+   }
 
-    modifier onlySchools() {
-        require(schools[msg.sender], "Only a school can perform this action");
-        _;
-    }
+   modifier onlyGovernment() {
+      require(
+         msg.sender == government,
+         "Only the government can perform this action"
+      );
+      _;
+   }
 
-    modifier onlySchoolsOrGoverment() {
-        require(
-            schools[msg.sender] || msg.sender == government,
-            "Only a school or the goverment can perform this action"
-        );
-        _;
-    }
+   modifier onlySchools() {
+      require(schools[msg.sender], "Only a school can perform this action");
+      _;
+   }
 
-    function createSchool(address _schoolAddress) public onlyGovernment {
-        schools[_schoolAddress] = true;
-    }
+   modifier onlySchoolsOrGoverment() {
+       require(schools[msg.sender] || msg.sender == government, "Only a school or the goverment can perform this action");
+       _;
+   }
 
-    function createStudent(address _studentAddress) public onlyGovernment {
-        students[_studentAddress] = Student(new address[](0), new uint256[](0));
-        students[_studentAddress].schoolsAllowed.push(msg.sender);
-    }
+   function createSchool(address _schoolAddress) public onlyGovernment {
+      schools[_schoolAddress] = true;
+   }
 
-    function getStudent(
-        address wallet
-    ) public view returns (address[] memory, uint256[] memory) {
-        return (students[wallet].schoolsAllowed, students[wallet].ownedNFTs);
-    }
+   function createStudent(address _studentAddress) public onlyGovernment {
+      students[_studentAddress] = Student(
+         new address[](0),
+         new uint256[](0)
+      );
+      students[_studentAddress].schoolsAllowed.push(msg.sender);
+   }
 
-    function deleteStudent(
-        address _studentAddress
-    ) public onlySchoolsOrGoverment {
+   function getStudent(address wallet) public view returns (address[] memory, uint256[] memory) {
+       return (students[wallet].schoolsAllowed, students[wallet].ownedNFTs);
+   }
+
+    function deleteStudent(address _studentAddress) public onlySchoolsOrGoverment {
         delete students[_studentAddress];
     }
 
-    function issueNFT(address _studentAddress) public onlySchoolsOrGoverment {
+    function issueNFT(address _studentAddress, string memory tokenURI) public onlySchoolsOrGoverment {
         uint256 newNFTId = _tokenIds.current() + 1;
         _mint(_studentAddress, newNFTId);
-        schoolNFTs[newNFTId] = SchoolNFT(
-            newNFTId,
-            msg.sender,
-            _studentAddress,
-            block.timestamp
-        );
+        _setTokenURI(newNFTId, tokenURI);
+        schoolNFTs[newNFTId] = SchoolNFT(newNFTId, msg.sender, _studentAddress, block.timestamp);
         schoolNFTsBySchool[msg.sender].push(newNFTId);
         students[_studentAddress].ownedNFTs.push(newNFTId);
+        ipfsById[newNFTId] = tokenURI;
         _tokenIds.increment();
     }
 
@@ -98,8 +95,12 @@ contract EducationSystem is ERC721 {
         delete schoolNFTs[_tokenId];
     }
 
-    function getSchoolNFTs(address school) public view returns (uint256[]) {
-        return (schoolNFTsBySchool[school]);
+    function getSchoolNFTs(uint256 id) public view returns (address, address, uint256) {
+       return (schoolNFTs[id].schoolAddress, schoolNFTs[id].studentAddress, schoolNFTs[id].issuedAt);
+    }
+
+    function getIPFSByID(uint tokenId) public view returns (string memory) {
+        return ipfsById[tokenId];
     }
 
     function seeOwnedNFTs(
