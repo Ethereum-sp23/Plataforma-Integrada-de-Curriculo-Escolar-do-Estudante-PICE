@@ -11,7 +11,10 @@ const StudentHeader = () => {
 
     return (
         <div className="bg-white flex flex-col items-center pt-12 pb-6 relative">
-            <div className="absolute left-4 top-4 w-8 h-8" onClick={() => router.back()}>
+            <div
+                className="absolute left-4 top-4 w-8 h-8 cursor-pointer hover:scale-105 transition-all"
+                onClick={() => router.back()}
+            >
                 <Icon icon="caret-left" fill="black" />
             </div>
             <div className="rounded-full shadow mb-2">

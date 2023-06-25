@@ -4,14 +4,13 @@ import React, { useMemo } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import Card from "@/components/card";
 import Badge, { BadgeType } from "@/components/badge";
+import ActionItem from "@/components/actionItem";
 
-//example data type
 type Student = {
     wallet: string;
     name: string;
     status: boolean;
     course: string;
-    period: string;
 };
 
 const data: Student[] = [
@@ -20,42 +19,36 @@ const data: Student[] = [
         wallet: "0x123",
         status: true,
         course: "Engenharia de Software",
-        period: "3",
     },
     {
         name: "John",
         wallet: "0x123",
         status: true,
         course: "Engenharia de Software",
-        period: "3",
     },
     {
         name: "John",
         wallet: "0x123",
         status: true,
         course: "Engenharia de Software",
-        period: "3",
     },
     {
         name: "John",
         wallet: "0x123",
         status: false,
         course: "Engenharia de Software",
-        period: "3",
     },
     {
         name: "John",
         wallet: "0x123",
         status: false,
         course: "Engenharia de Software",
-        period: "3",
     },
     {
         name: "John",
         wallet: "0x123",
         status: false,
         course: "Engenharia de Software",
-        period: "3",
     },
 ];
 
@@ -74,6 +67,11 @@ const Institution = () => {
                 size: 150,
             },
             {
+                accessorKey: "course", //normal accessorKey
+                header: "Curso atual",
+                size: 200,
+            },
+            {
                 accessorKey: "status",
                 header: "Status",
                 size: 150,
@@ -83,28 +81,26 @@ const Institution = () => {
                     </Badge>
                 ),
             },
-            {
-                accessorKey: "course", //normal accessorKey
-                header: "Curso atual",
-                size: 200,
-            },
-            {
-                accessorKey: "period",
-                header: "Periodo",
-                size: 150,
-            },
-            {
-                accessorKey: "wallet",
-                header: "Ações",
-                size: 150,
-            },
         ],
         []
     );
 
+    const actionItems = (wallet: string) => {
+        return [
+            <ActionItem key={1} icon="visibility" label="Ver informações" link={"/student/" + wallet} />,
+            <ActionItem key={2} icon="edit" label="Adicionar atividade" link={`/institution/${wallet}/edit/`} />,
+        ];
+    };
+
     return (
-        <Card classes="m-10 p-10" titleLg title="Estudantes da instituição">
-            <MaterialReactTable columns={columns} data={data} />
+        <Card classes="m-10 px-10" titleLg title="Estudantes da instituição">
+            <MaterialReactTable
+                columns={columns}
+                data={data}
+                enableRowActions
+                positionActionsColumn="last"
+                renderRowActionMenuItems={({ row }) => actionItems(row._valuesCache.wallet)}
+            />
         </Card>
     );
 };
