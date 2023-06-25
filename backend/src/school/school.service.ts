@@ -79,7 +79,11 @@ export class SchoolService {
       throw new Error(error.message);
     }
 
-    const isMatch = await bcrypt.compare(data[0].password, body.password);
+    if (data.length === 0) {
+      throw new Error('Não foi possivel entrar');
+    }
+
+    const isMatch = await bcrypt.compare(body.password, data[0].password);
 
     if (!isMatch) {
       throw new Error('Não foi possivel entrar');
