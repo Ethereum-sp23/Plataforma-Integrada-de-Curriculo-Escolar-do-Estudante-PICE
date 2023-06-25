@@ -1,6 +1,6 @@
 "use client";
 import { Web3Connection } from "@taikai/dappkit";
-import React, { createContext, useState, useContext, SetStateAction } from "react";
+import React, { createContext, useState, useContext, SetStateAction, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Web3 } from "web3";
 
@@ -18,10 +18,16 @@ export default function AuthProvider({ children }: any) {
     const [account, setAccount] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        if (!account) {
+            setAccount(localStorage.getItem("account"));
+        }
+    }, []);
+
     const changeNetwork = async () => {
         const provider = (window as any).ethereum;
         const chainId = 11155111;
-   
+
         if (provider.networkVersion != chainId) {
             await provider.request({
                 method: "wallet_switchEthereumChain",
@@ -45,7 +51,7 @@ export default function AuthProvider({ children }: any) {
                 const addrs = await web3Connection.getAddress();
                 setAccount(addrs);
                 localStorage.setItem("account", addrs);
-                
+
                 console.log("Metamask conectada com sucesso! Wallet address: ", account);
                 return addrs;
             } catch (error) {
